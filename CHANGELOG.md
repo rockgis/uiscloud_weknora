@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.2.3] - 2026-02-26
 
 ### ⚙️ CI/CD
 - **REFACTORED**: GitHub Actions workflows
@@ -336,7 +336,7 @@ All notable changes to this project will be documented in this file.
 - Docker Compose for quick startup and service orchestration.
 - MCP server support for integrating with MCP-compatible clients.
 
-[Unreleased]: https://github.com/Tencent/WeKnora/compare/v0.2.2...HEAD
+[0.2.3]: https://github.com/Tencent/WeKnora/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/Tencent/WeKnora/tree/v0.2.2
 [0.2.1]: https://github.com/Tencent/WeKnora/tree/v0.2.1
 [0.2.0]: https://github.com/Tencent/WeKnora/tree/v0.2.0
