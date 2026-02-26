@@ -1,0 +1,1737 @@
+<template>
+    <div class="aside_box">
+        <div class="logo_box" @click="router.push('/platform/knowledge-bases')" style="cursor: pointer;">
+            <img class="logo" src="@/assets/img/weknora.png" alt="">
+        </div>
+        
+        <TenantSelector v-if="canAccessAllTenants" />
+        
+        <div class="menu_top">
+            <div v-if="showKbActions" class="kb-action-wrapper">
+                <div class="kb-action-label">{{ t('knowledgeBase.quickActions') }}</div>
+                <div class="kb-action-menu">
+                    <template v-if="showCreateKbAction">
+                        <div class="menu_item kb-action-item" @click.stop="handleCreateKnowledgeBase">
+                            <div class="kb-action-icon-wrapper">
+                                <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M9 3.75V14.25M3.75 9H14.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="kb-action-content">
+                                <span class="kb-action-title">{{ t('knowledgeList.create') }}</span>
+                            </div>
+                        </div>
+                    </template>
+                    <template v-else-if="showDocActions">
+                        <div class="menu_item kb-action-item" @click.stop="handleDocUploadClick">
+                            <div class="kb-action-icon-wrapper">
+                                <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M15.75 11.25V14.25C15.75 14.6478 15.592 15.0294 15.3107 15.3107C15.0294 15.592 14.6478 15.75 14.25 15.75H3.75C3.35218 15.75 2.97064 15.592 2.68934 15.3107C2.40804 15.0294 2.25 14.6478 2.25 14.25V11.25M12.75 6L9 2.25M9 2.25L5.25 6M9 2.25V11.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="kb-action-content">
+                                <span class="kb-action-title">{{ t('upload.uploadDocument') }}</span>
+                            </div>
+                        </div>
+                        <div class="menu_item kb-action-item" @click.stop="handleDocFolderUploadClick">
+                            <div class="kb-action-icon-wrapper">
+                                <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                    <path d="M22 19C22 19.5304 21.7893 20.0391 21.4142 20.4142C21.0391 20.7893 20.5304 21 20 21H4C3.46957 21 2.96086 20.7893 2.58579 20.4142C2.21071 20.0391 2 19.5304 2 19V5C2 4.46957 2.21071 3.96086 2.58579 3.58579C2.96086 3.21071 3.46957 3 4 3H9L11 6H20C20.5304 6 21.0391 6.21071 21.4142 6.58579C21.7893 6.96086 22 7.46957 22 8V19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 11V17M9 14H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="kb-action-content">
+                                <span class="kb-action-title">{{ t('upload.uploadFolder') }}</span>
+                            </div>
+                        </div>
+                        <div class="menu_item kb-action-item" @click.stop="handleDocURLImport">
+                            <div class="kb-action-icon-wrapper">
+                                <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                    <path d="M10 13C10.4295 13.5741 10.9774 14.0491 11.6066 14.3929C12.2357 14.7367 12.9315 14.9411 13.6467 14.9923C14.3618 15.0435 15.0796 14.9403 15.7513 14.6897C16.4231 14.4392 17.0331 14.047 17.54 13.54L20.54 10.54C21.4508 9.59695 21.9548 8.33394 21.9434 7.02296C21.932 5.71198 21.4061 4.45791 20.4791 3.53087C19.5521 2.60383 18.298 2.07799 16.987 2.0666C15.676 2.0552 14.413 2.55918 13.47 3.46997L11.75 5.17997M14 11C13.5705 10.4258 13.0226 9.95078 12.3934 9.60703C11.7642 9.26327 11.0685 9.05885 10.3533 9.00763C9.63819 8.95641 8.92037 9.0596 8.24861 9.31018C7.57685 9.56077 6.96685 9.9529 6.45996 10.46L3.45996 13.46C2.54917 14.403 2.04519 15.666 2.05659 16.977C2.06798 18.288 2.59382 19.542 3.52086 20.4691C4.44791 21.3961 5.70197 21.9219 7.01295 21.9333C8.32393 21.9447 9.58694 21.4408 10.53 20.53L12.24 18.82" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="kb-action-content">
+                                <span class="kb-action-title">{{ t('knowledgeBase.importURL') }}</span>
+                            </div>
+                        </div>
+                        <div class="menu_item kb-action-item" @click.stop="handleDocManualCreate">
+                            <div class="kb-action-icon-wrapper">
+                                <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M8.25 2.25H3.75C3.35218 2.25 2.97064 2.40804 2.68934 2.68934C2.40804 2.97064 2.25 3.35218 2.25 3.75V14.25C2.25 14.6478 2.40804 15.0294 2.68934 15.3107C2.97064 15.592 3.35218 15.75 3.75 15.75H14.25C14.6478 15.75 15.0294 15.592 15.3107 15.3107C15.592 15.0294 15.75 14.6478 15.75 14.25V9.75M13.875 3.375L5.625 11.625L5.25 12.75L6.375 12.375L14.625 4.125C14.7745 3.97554 14.8571 3.77516 14.8571 3.5625C14.8571 3.34984 14.7745 3.14946 14.625 3L15 2.625L14.625 3C14.4755 2.85054 14.2752 2.76786 14.0625 2.76786C13.8498 2.76786 13.6495 2.85054 13.5 3L13.875 3.375Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="kb-action-content">
+                                <span class="kb-action-title">{{ t('upload.onlineEdit') }}</span>
+                            </div>
+                        </div>
+                    </template>
+                    <template v-else-if="showFaqActions">
+                        <div class="menu_item kb-action-item" @click.stop="handleFaqCreateFromMenu">
+                            <div class="kb-action-icon-wrapper">
+                                <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M9 3.75V14.25M3.75 9H14.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="kb-action-content">
+                                <span class="kb-action-title">{{ t('knowledgeEditor.faq.editorCreate') }}</span>
+                            </div>
+                        </div>
+                        <div class="menu_item kb-action-item" @click.stop="handleFaqImportFromMenu">
+                            <div class="kb-action-icon-wrapper">
+                                <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M15.75 11.25V14.25C15.75 14.6478 15.592 15.0294 15.3107 15.3107C15.0294 15.592 14.6478 15.75 14.25 15.75H3.75C3.35218 15.75 2.97064 15.592 2.68934 15.3107C2.40804 15.0294 2.25 14.6478 2.25 14.25V11.25M5.25 7.5L9 11.25M9 11.25L12.75 7.5M9 11.25V2.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="kb-action-content">
+                                <span class="kb-action-title">{{ t('knowledgeEditor.faqImport.importButton') }}</span>
+                            </div>
+                        </div>
+                        <div class="menu_item kb-action-item" @click.stop="handleFaqSearchTestFromMenu">
+                            <div class="kb-action-icon-wrapper">
+                                <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M8.25 15C11.9779 15 15 11.9779 15 8.25C15 4.52208 11.9779 1.5 8.25 1.5C4.52208 1.5 1.5 4.52208 1.5 8.25C1.5 11.9779 4.52208 15 8.25 15Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16.5 16.5L12.4875 12.4875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="kb-action-content">
+                                <span class="kb-action-title">{{ t('knowledgeEditor.faq.searchTest') }}</span>
+                            </div>
+                        </div>
+                        <div class="menu_item kb-action-item" @click.stop="handleFaqExportFromMenu">
+                            <div class="kb-action-icon-wrapper">
+                                <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M15.75 11.25V14.25C15.75 14.6478 15.592 15.0294 15.3107 15.3107C15.0294 15.592 14.6478 15.75 14.25 15.75H3.75C3.35218 15.75 2.97064 15.592 2.68934 15.3107C2.40804 15.0294 2.25 14.6478 2.25 14.25V11.25M12.75 6L9 2.25M9 2.25L5.25 6M9 2.25V11.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="kb-action-content">
+                                <span class="kb-action-title">{{ t('knowledgeEditor.faqExport.exportButton') }}</span>
+                            </div>
+                        </div>
+                        <t-dropdown
+                          v-if="selectedFaqCount > 0"
+                          :options="faqBatchActionOptions"
+                          trigger="hover"
+                          placement="right"
+                          @click="handleFaqBatchActionFromMenu"
+                        >
+                          <div class="menu_item kb-action-item">
+                            <div class="kb-action-icon-wrapper">
+                              <svg class="kb-action-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M3.75 9H14.25M9 3.75V14.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3.75 3.75H14.25V14.25H3.75V3.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                            </div>
+                            <div class="kb-action-content">
+                              <span class="kb-action-title">{{ t('knowledgeEditor.faq.batchOperations') }}</span>
+                              <span class="kb-action-count">({{ selectedFaqCount }})</span>
+                            </div>
+                          </div>
+                        </t-dropdown>
+                    </template>
+                </div>
+            </div>
+            <div class="menu_box" :class="{ 'has-submenu': item.children }" v-for="(item, index) in topMenuItems" :key="index">
+                <div @click="handleMenuClick(item.path)"
+                    @mouseenter="mouseenteMenu(item.path)" @mouseleave="mouseleaveMenu(item.path)"
+                     :class="['menu_item', item.childrenPath && item.childrenPath == currentpath ? 'menu_item_c_active' : isMenuItemActive(item.path) ? 'menu_item_active' : '']">
+                    <div class="menu_item-box">
+                        <div class="menu_icon">
+                            <img class="icon" :src="getImgSrc(item.icon == 'zhishiku' ? knowledgeIcon : item.icon == 'logout' ? logoutIcon : item.icon == 'setting' ? settingIcon : prefixIcon)" alt="">
+                        </div>
+                        <span class="menu_title" :title="item.title">{{ item.title }}</span>
+                        <t-icon v-if="item.path === 'creatChat'" name="add" class="menu-create-hint" />
+                    </div>
+                </div>
+                <div ref="submenuscrollContainer" @scroll="handleScroll" class="submenu" v-if="item.children">
+                    <template v-for="(group, groupIndex) in groupedSessions" :key="groupIndex">
+                        <div class="timeline_header">{{ group.label }}</div>
+                        <div class="submenu_item_p" v-for="(subitem, subindex) in group.items" :key="subitem.id">
+                            <div :class="['submenu_item', currentSecondpath == subitem.path ? 'submenu_item_active' : '']"
+                                @mouseenter="mouseenteBotDownr(subitem.id)" @mouseleave="mouseleaveBotDown"
+                                @click="gotopage(subitem.path)">
+                                <span class="submenu_title"
+                                    :style="currentSecondpath == subitem.path ? 'margin-left:18px;max-width:160px;' : 'margin-left:18px;max-width:185px;'">
+                                    {{ subitem.title }}
+                                </span>
+                                <t-dropdown 
+                                    :options="[{ content: t('upload.deleteRecord'), value: 'delete' }]"
+                                    @click="handleSessionMenuClick($event, subitem.originalIndex, subitem)"
+                                    placement="bottom-right"
+                                    trigger="click">
+                                    <div @click.stop class="menu-more-wrap">
+                                        <t-icon name="ellipsis" class="menu-more" />
+                                    </div>
+                                </t-dropdown>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="menu_bottom">
+            <UserMenu />
+        </div>
+        
+        <input
+            ref="docUploadInput"
+            type="file"
+            class="kb-upload-input"
+            accept=".pdf,.docx,.doc,.txt,.md,.jpg,.jpeg,.png,.csv,.xls,.xlsx"
+            multiple
+            @change="handleDocFileChange"
+        />
+        <input
+            ref="docFolderInput"
+            type="file"
+            class="kb-upload-input"
+            webkitdirectory
+            @change="handleDocFolderChange"
+        />
+    </div>
+</template>
+
+<script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { onMounted, onUnmounted, watch, computed, ref, reactive } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { getSessionsList, delSession } from "@/api/chat/index";
+import { getKnowledgeBaseById, uploadKnowledgeFile, createKnowledgeFromURL } from '@/api/knowledge-base';
+import { logout as logoutApi } from '@/api/auth';
+import { useMenuStore } from '@/stores/menu';
+import { useAuthStore } from '@/stores/auth';
+import { useUIStore } from '@/stores/ui';
+import { MessagePlugin } from "tdesign-vue-next";
+import UserMenu from '@/components/UserMenu.vue';
+import TenantSelector from '@/components/TenantSelector.vue';
+import { useI18n } from 'vue-i18n';
+import { kbFileTypeVerification } from '@/utils';
+
+const { t } = useI18n();
+const usemenuStore = useMenuStore();
+const authStore = useAuthStore();
+const uiStore = useUIStore();
+const route = useRoute();
+const router = useRouter();
+const currentpath = ref('');
+const currentPage = ref(1);
+const page_size = ref(30);
+const total = ref(0);
+const currentSecondpath = ref('');
+const submenuscrollContainer = ref(null);
+const totalPages = computed(() => Math.ceil(total.value / page_size.value));
+const hasMore = computed(() => currentPage.value < totalPages.value);
+type MenuItem = { title: string; icon: string; path: string; childrenPath?: string; children?: any[] };
+const { menuArr } = storeToRefs(usemenuStore);
+let activeSubmenu = ref<string>('');
+
+const canAccessAllTenants = computed(() => authStore.canAccessAllTenants);
+
+const isInKnowledgeBase = computed<boolean>(() => {
+    return route.name === 'knowledgeBaseDetail' || 
+           route.name === 'kbCreatChat' || 
+           route.name === 'knowledgeBaseSettings';
+});
+
+const isInKnowledgeBaseList = computed<boolean>(() => {
+    return route.name === 'knowledgeBaseList';
+});
+
+const isInCreatChat = computed<boolean>(() => {
+    return route.name === 'globalCreatChat' || route.name === 'kbCreatChat';
+});
+
+const isInChatDetail = computed<boolean>(() => route.name === 'chat');
+
+const isMenuItemActive = (itemPath: string): boolean => {
+    const currentRoute = route.name;
+    
+    switch (itemPath) {
+        case 'knowledge-bases':
+            return currentRoute === 'knowledgeBaseList' || 
+                   currentRoute === 'knowledgeBaseDetail' || 
+                   currentRoute === 'knowledgeBaseSettings';
+        case 'creatChat':
+            return currentRoute === 'kbCreatChat' || currentRoute === 'globalCreatChat';
+        case 'settings':
+            return currentRoute === 'settings';
+        default:
+            return itemPath === currentpath.value;
+    }
+};
+
+const getIconActiveState = (itemPath: string) => {
+    const currentRoute = route.name;
+    
+    return {
+        isKbActive: itemPath === 'knowledge-bases' && (
+            currentRoute === 'knowledgeBaseList' || 
+            currentRoute === 'knowledgeBaseDetail' || 
+            currentRoute === 'knowledgeBaseSettings'
+        ),
+        isCreatChatActive: itemPath === 'creatChat' && (currentRoute === 'kbCreatChat' || currentRoute === 'globalCreatChat'),
+        isSettingsActive: itemPath === 'settings' && currentRoute === 'settings',
+        isChatActive: itemPath === 'chat' && currentRoute === 'chat'
+    };
+};
+
+const topMenuItems = computed<MenuItem[]>(() => {
+    return (menuArr.value as unknown as MenuItem[]).filter((item: MenuItem) => 
+        item.path === 'knowledge-bases' || item.path === 'creatChat'
+    );
+});
+
+const bottomMenuItems = computed<MenuItem[]>(() => {
+    return (menuArr.value as unknown as MenuItem[]).filter((item: MenuItem) => {
+        if (item.path === 'knowledge-bases' || item.path === 'creatChat') {
+            return false;
+        }
+        return true;
+    });
+});
+
+const currentKbName = ref<string>('')
+const currentKbInfo = ref<any>(null)
+const docUploadInput = ref<HTMLInputElement | null>(null)
+const docFolderInput = ref<HTMLInputElement | null>(null)
+const pendingUploadKbId = ref<string | null>(null)
+const selectedFaqCount = ref<number>(0)
+const selectedFaqEnabledCount = ref<number>(0)
+const selectedFaqDisabledCount = ref<number>(0)
+
+const handleFaqSelectionChanged = ((event: CustomEvent<{ count: number; enabledCount?: number; disabledCount?: number }>) => {
+  const count = event.detail?.count || 0
+  selectedFaqCount.value = count
+  selectedFaqEnabledCount.value = event.detail?.enabledCount || 0
+  selectedFaqDisabledCount.value = event.detail?.disabledCount || 0
+}) as EventListener
+
+const showKbActions = computed(() => 
+    (isInKnowledgeBase.value && !!currentKbInfo.value) || 
+    isInKnowledgeBaseList.value || 
+    isInCreatChat.value ||
+    isInChatDetail.value
+)
+const currentKbType = computed(() => currentKbInfo.value?.type || 'document')
+const showDocActions = computed(() => showKbActions.value && isInKnowledgeBase.value && currentKbType.value !== 'faq')
+const showFaqActions = computed(() => showKbActions.value && isInKnowledgeBase.value && currentKbType.value === 'faq')
+const showCreateKbAction = computed(() => showKbActions.value && (isInKnowledgeBaseList.value || isInCreatChat.value || isInChatDetail.value))
+
+const getTimeCategory = (dateStr: string): string => {
+    if (!dateStr) return t('time.earlier');
+    
+    const date = new Date(dateStr);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+    const sevenDaysAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+    const oneYearAgo = new Date(today.getTime() - 365 * 24 * 60 * 60 * 1000);
+    
+    const sessionDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    
+    if (sessionDate.getTime() >= today.getTime()) {
+        return t('time.today');
+    } else if (sessionDate.getTime() >= yesterday.getTime()) {
+        return t('time.yesterday');
+    } else if (date.getTime() >= sevenDaysAgo.getTime()) {
+        return t('time.last7Days');
+    } else if (date.getTime() >= thirtyDaysAgo.getTime()) {
+        return t('time.last30Days');
+    } else if (date.getTime() >= oneYearAgo.getTime()) {
+        return t('time.lastYear');
+    } else {
+        return t('time.earlier');
+    }
+};
+
+const groupedSessions = computed(() => {
+    const chatMenu = (menuArr.value as unknown as MenuItem[]).find((item: MenuItem) => item.path === 'creatChat');
+    if (!chatMenu || !chatMenu.children || chatMenu.children.length === 0) {
+        return [];
+    }
+    
+    const groups: { [key: string]: any[] } = {
+        [t('time.today')]: [],
+        [t('time.yesterday')]: [],
+        [t('time.last7Days')]: [],
+        [t('time.last30Days')]: [],
+        [t('time.lastYear')]: [],
+        [t('time.earlier')]: []
+    };
+    
+    (chatMenu.children as any[]).forEach((session: any, index: number) => {
+        const category = getTimeCategory(session.updated_at || session.created_at);
+        groups[category].push({
+            ...session,
+            originalIndex: index
+        });
+    });
+    
+    const orderedLabels = [t('time.today'), t('time.yesterday'), t('time.last7Days'), t('time.last30Days'), t('time.lastYear'), t('time.earlier')];
+    return orderedLabels
+        .filter(label => groups[label].length > 0)
+        .map(label => ({
+            label,
+            items: groups[label]
+        }));
+});
+
+const loading = ref(false)
+const mouseenteBotDownr = (val: string) => {
+    activeSubmenu.value = val;
+}
+const mouseleaveBotDown = () => {
+    activeSubmenu.value = '';
+}
+
+const handleSessionMenuClick = (data: { value: string }, index: number, item: any) => {
+    if (data?.value === 'delete') {
+        delCard(index, item);
+    }
+};
+
+const delCard = (index: number, item: any) => {
+    delSession(item.id).then((res: any) => {
+        if (res && (res as any).success) {
+            const actualIndex = index !== undefined ? index : 
+                (menuArr.value as any[])[1]?.children?.findIndex((s: any) => s.id === item.id);
+            
+            if (actualIndex !== -1) {
+                (menuArr.value as any[])[1]?.children?.splice(actualIndex, 1);
+            }
+            
+            if (item.id == route.params.chatid) {
+                router.push('/platform/creatChat');
+            }
+        } else {
+            MessagePlugin.error("삭제에 실패했습니다. 잠시 후 다시 시도해 주세요!");
+        }
+    })
+}
+const debounce = (fn: (...args: any[]) => void, delay: number) => {
+    let timer: ReturnType<typeof setTimeout>
+    return (...args: any[]) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => fn(...args), delay)
+    }
+}
+const checkScrollBottom = () => {
+    const container = submenuscrollContainer.value
+    if (!container || !container[0]) return
+
+    const { scrollTop, scrollHeight, clientHeight } = container[0]
+    const isBottom = scrollHeight - (scrollTop + clientHeight) < 100
+    
+    if (isBottom && hasMore.value && !loading.value) {
+        currentPage.value++;
+        getMessageList(true);
+    }
+}
+const handleScroll = debounce(checkScrollBottom, 200)
+const getMessageList = async (isLoadMore = false) => {
+    if (loading.value) return Promise.resolve();
+    loading.value = true;
+    
+    if (!isLoadMore) {
+        currentPage.value = 1;
+        usemenuStore.clearMenuArr();
+    }
+    
+    return getSessionsList(currentPage.value, page_size.value).then((res: any) => {
+        if (res.data && res.data.length) {
+            // Display all sessions globally without filtering
+            res.data.forEach((item: any) => {
+                let obj = { 
+                    title: item.title ? item.title : "새 대화", 
+                    path: `chat/${item.id}`, 
+                    id: item.id, 
+                    isMore: false, 
+                    isNoTitle: item.title ? false : true,
+                    created_at: item.created_at,
+                    updated_at: item.updated_at
+                }
+                usemenuStore.updatemenuArr(obj)
+            });
+        }
+        if ((res as any).total) {
+            total.value = (res as any).total;
+        }
+        loading.value = false;
+    }).catch(() => {
+        loading.value = false;
+    })
+}
+
+onMounted(async () => {
+    const routeName = typeof route.name === 'string' ? route.name : (route.name ? String(route.name) : '')
+    currentpath.value = routeName;
+    if (route.params.chatid) {
+        currentSecondpath.value = `chat/${route.params.chatid}`;
+    }
+    
+    const kbId = (route.params as any)?.kbId as string
+    if (kbId && isInKnowledgeBase.value) {
+        try {
+            const kbRes: any = await getKnowledgeBaseById(kbId)
+            if (kbRes?.data) {
+                currentKbName.value = kbRes.data.name || ''
+                currentKbInfo.value = kbRes.data
+            }
+        } catch {}
+    } else {
+        currentKbName.value = ''
+        currentKbInfo.value = null
+    }
+    
+    getMessageList();
+    
+    window.addEventListener('faqSelectionChanged', handleFaqSelectionChanged)
+});
+
+onUnmounted(() => {
+    window.removeEventListener('faqSelectionChanged', handleFaqSelectionChanged)
+})
+
+watch([() => route.name, () => route.params], (newvalue, oldvalue) => {
+    if (newvalue[1].kbId !== oldvalue?.[1]?.kbId) {
+        selectedFaqCount.value = 0
+    }
+    const nameStr = typeof newvalue[0] === 'string' ? (newvalue[0] as string) : (newvalue[0] ? String(newvalue[0]) : '')
+    currentpath.value = nameStr;
+    if (newvalue[1].chatid) {
+        currentSecondpath.value = `chat/${newvalue[1].chatid}`;
+    } else {
+        currentSecondpath.value = "";
+    }
+    
+    const oldRouteNameStr = typeof oldvalue?.[0] === 'string' ? (oldvalue[0] as string) : (oldvalue?.[0] ? String(oldvalue[0]) : '')
+    const isCreatingNewSession = (oldRouteNameStr === 'globalCreatChat' || oldRouteNameStr === 'kbCreatChat') && 
+                                 nameStr !== 'globalCreatChat' && nameStr !== 'kbCreatChat';
+    
+    if (isCreatingNewSession) {
+        getMessageList();
+    }
+    
+    getIcon(nameStr);
+    
+    if (newvalue[1].kbId !== oldvalue?.[1]?.kbId) {
+        const kbId = (newvalue[1] as any)?.kbId as string;
+        if (kbId && isInKnowledgeBase.value) {
+            getKnowledgeBaseById(kbId).then((kbRes: any) => {
+                if (kbRes?.data) {
+                    currentKbName.value = kbRes.data.name || '';
+                    currentKbInfo.value = kbRes.data;
+                }
+            }).catch(() => {
+                currentKbInfo.value = null;
+            });
+        } else {
+            currentKbName.value = '';
+            currentKbInfo.value = null;
+        }
+    }
+});
+let knowledgeIcon = ref('zhishiku-green.svg');
+let prefixIcon = ref('prefixIcon.svg');
+let logoutIcon = ref('logout.svg');
+let settingIcon = ref('setting.svg');
+let pathPrefix = ref(route.name)
+  const getIcon = (path: string) => {
+      const kbActiveState = getIconActiveState('knowledge-bases');
+      const creatChatActiveState = getIconActiveState('creatChat');
+      const settingsActiveState = getIconActiveState('settings');
+      
+      knowledgeIcon.value = kbActiveState.isKbActive ? 'zhishiku-green.svg' : 'zhishiku.svg';
+      
+      prefixIcon.value = creatChatActiveState.isCreatChatActive ? 'prefixIcon-green.svg' : 
+                        kbActiveState.isKbActive ? 'prefixIcon-grey.svg' : 
+                        'prefixIcon.svg';
+      
+      settingIcon.value = settingsActiveState.isSettingsActive ? 'setting-green.svg' : 'setting.svg';
+      
+      logoutIcon.value = 'logout.svg';
+}
+getIcon(typeof route.name === 'string' ? route.name as string : (route.name ? String(route.name) : ''))
+const handleMenuClick = async (path: string) => {
+    if (path === 'knowledge-bases') {
+        const kbId = await getCurrentKbId()
+        if (kbId) {
+            router.push(`/platform/knowledge-bases/${kbId}`)
+        } else {
+            router.push('/platform/knowledge-bases')
+        }
+    } else if (path === 'settings') {
+        uiStore.openSettings()
+        router.push('/platform/settings')
+    } else {
+        gotopage(path)
+    }
+}
+
+const handleLogout = () => {
+    gotopage('logout')
+}
+
+const getCurrentKbId = async (): Promise<string | null> => {
+    const kbId = (route.params as any)?.kbId as string
+    if (isInKnowledgeBase.value && kbId) {
+        return kbId
+    }
+    return null
+}
+
+const gotopage = async (path: string) => {
+    pathPrefix.value = path;
+    if (path === 'logout') {
+        try {
+            await logoutApi();
+        } catch (error) {
+            console.error('로그아웃 API 호출 실패:', error);
+        }
+        authStore.logout();
+        MessagePlugin.success('로그아웃되었습니다');
+        router.push('/login');
+        return;
+    } else {
+        if (path === 'creatChat') {
+            if (isInKnowledgeBase.value) {
+                router.push('/platform/creatChat')
+            } else {
+                router.push(`/platform/creatChat`)
+            }
+        } else {
+            router.push(`/platform/${path}`);
+        }
+    }
+    getIcon(path)
+}
+
+const getImgSrc = (url: string) => {
+    return new URL(`/src/assets/img/${url}`, import.meta.url).href;
+}
+
+const mouseenteMenu = (path: string) => {
+    if (pathPrefix.value != 'knowledge-bases' && pathPrefix.value != 'creatChat' && path != 'knowledge-bases') {
+        prefixIcon.value = 'prefixIcon-grey.svg';
+    }
+}
+const mouseleaveMenu = (path: string) => {
+    if (pathPrefix.value != 'knowledge-bases' && pathPrefix.value != 'creatChat' && path != 'knowledge-bases') {
+        const nameStr = typeof route.name === 'string' ? route.name as string : (route.name ? String(route.name) : '')
+        getIcon(nameStr)
+    }
+}
+
+const ensureDocKnowledgeBaseReady = async (): Promise<string | null> => {
+    const kbId = await getCurrentKbId()
+    if (!kbId) {
+        MessagePlugin.warning(t('knowledgeEditor.messages.missingId'))
+        return null
+    }
+    if (currentKbType.value === 'faq') {
+        MessagePlugin.warning(t('knowledgeBase.docActionUnsupported'))
+        return null
+    }
+    if (!currentKbInfo.value || !currentKbInfo.value.embedding_model_id || !currentKbInfo.value.summary_model_id) {
+        MessagePlugin.warning(t('knowledgeBase.notInitialized'))
+        return null
+    }
+    return kbId
+}
+
+const handleDocUploadClick = async () => {
+    const kbId = await ensureDocKnowledgeBaseReady()
+    if (!kbId) return
+    pendingUploadKbId.value = kbId
+    docUploadInput.value?.click()
+}
+
+const FAILED_FILES_PREVIEW_LIMIT = 10
+
+const summarizeFailedFiles = (failedFiles: Array<{ name: string; reason: string }>) => {
+    const duplicateLabel = t('knowledgeBase.fileExists')
+    let duplicateCount = 0
+    const nonDuplicate: Array<{ name: string; reason: string }> = []
+    failedFiles.forEach((file) => {
+        if (file.reason === duplicateLabel) {
+            duplicateCount++
+        } else {
+            nonDuplicate.push(file)
+        }
+    })
+
+    const previewList = nonDuplicate.slice(0, FAILED_FILES_PREVIEW_LIMIT).map(f => `• ${f.name}: ${f.reason}`)
+    let nonDuplicateText = ''
+    if (previewList.length) {
+        nonDuplicateText = previewList.join('\n')
+        if (nonDuplicate.length > FAILED_FILES_PREVIEW_LIMIT) {
+            nonDuplicateText += `\n${t('knowledgeBase.andMoreFiles', { count: nonDuplicate.length - FAILED_FILES_PREVIEW_LIMIT })}`
+        }
+    }
+
+    return {
+        duplicateCount,
+        nonDuplicateText,
+    }
+}
+
+const handleDocFileChange = async (event: Event) => {
+    const input = event.target as HTMLInputElement
+    const files = input?.files
+    if (!files || files.length === 0) {
+        pendingUploadKbId.value = null
+        return
+    }
+
+    const kbId = pendingUploadKbId.value || (await ensureDocKnowledgeBaseReady())
+    pendingUploadKbId.value = null
+    if (!kbId) {
+        input.value = ''
+        return
+    }
+
+    const validFiles: File[] = []
+    let invalidCount = 0
+    const isSingleFile = files.length === 1
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        if (kbFileTypeVerification(file, !isSingleFile)) {
+            invalidCount++
+        } else {
+            validFiles.push(file)
+        }
+    }
+
+    if (validFiles.length === 0) {
+        if (!isSingleFile && invalidCount > 0) {
+            MessagePlugin.error(t('knowledgeBase.noValidFilesSelected'))
+        }
+        input.value = ''
+        return
+    }
+
+    let successCount = 0
+    let failCount = 0
+    const totalCount = validFiles.length
+    const failedFiles: Array<{ name: string; reason: string }> = []
+
+    const uploadPromises = validFiles.map(async (file) => {
+        const uploadId = `${file.name}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+        let progress = 0
+        let status: 'uploading' | 'success' | 'error' = 'uploading'
+        let error: string | undefined
+
+        window.dispatchEvent(new CustomEvent('knowledgeFileUploadStart', {
+            detail: { 
+                kbId, 
+                uploadId, 
+                fileName: file.name
+            }
+        }))
+
+        try {
+            await uploadKnowledgeFile(
+                kbId, 
+                { file },
+                (progressEvent: any) => {
+                    if (progressEvent.total) {
+                        progress = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                        window.dispatchEvent(new CustomEvent('knowledgeFileUploadProgress', {
+                            detail: { 
+                                kbId, 
+                                uploadId, 
+                                progress 
+                            }
+                        }))
+                    }
+                }
+            )
+            successCount++
+            status = 'success'
+            progress = 100
+        } catch (error: any) {
+            failCount++
+            let errorReason = error?.error?.message || error?.message || t('knowledgeBase.uploadFailed')
+            if (error?.code === 'duplicate_file' || error?.error?.code === 'duplicate_file') {
+                errorReason = t('knowledgeBase.fileExists')
+            }
+            status = 'error'
+            error = errorReason
+            failedFiles.push({ name: file.name, reason: errorReason })
+
+            if (totalCount === 1) {
+                MessagePlugin.error(errorReason)
+            }
+        } finally {
+            window.dispatchEvent(new CustomEvent('knowledgeFileUploadComplete', {
+                detail: { 
+                    kbId, 
+                    uploadId, 
+                    status,
+                    progress,
+                    error
+                }
+            }))
+        }
+    })
+
+    await Promise.allSettled(uploadPromises)
+
+    if (successCount > 0) {
+        window.dispatchEvent(new CustomEvent('knowledgeFileUploaded', {
+            detail: { kbId }
+        }))
+    }
+
+    if (totalCount === 1) {
+        if (successCount === 1) {
+            MessagePlugin.success(t('knowledgeBase.uploadSuccess'))
+        }
+    } else {
+        if (failCount === 0) {
+            MessagePlugin.success(t('knowledgeBase.uploadAllSuccess', { count: successCount }))
+        } else if (successCount > 0) {
+            const { duplicateCount, nonDuplicateText } = summarizeFailedFiles(failedFiles)
+            const extraSections: string[] = []
+            if (duplicateCount > 0) {
+                extraSections.push(t('knowledgeBase.duplicateFilesSkipped', { count: duplicateCount }))
+            }
+            if (nonDuplicateText) {
+                extraSections.push(t('knowledgeBase.failedFilesList') + '\n' + nonDuplicateText)
+            }
+            const extraContent = extraSections.length ? '\n\n' + extraSections.join('\n\n') : ''
+            MessagePlugin.warning({
+                content: t('knowledgeBase.uploadPartialSuccess', {
+                    success: successCount,
+                    fail: failCount
+                }) + extraContent,
+                duration: 8000,
+                closeBtn: true
+            })
+        } else {
+            const { duplicateCount, nonDuplicateText } = summarizeFailedFiles(failedFiles)
+            const extraSections: string[] = []
+            if (duplicateCount > 0) {
+                extraSections.push(t('knowledgeBase.duplicateFilesSkipped', { count: duplicateCount }))
+            }
+            if (nonDuplicateText) {
+                extraSections.push(t('knowledgeBase.failedFilesList') + '\n' + nonDuplicateText)
+            }
+            const extraContent = extraSections.length ? '\n\n' + extraSections.join('\n\n') : ''
+            MessagePlugin.error({
+                content: t('knowledgeBase.uploadAllFailed') + extraContent,
+                duration: 8000,
+                closeBtn: true
+            })
+        }
+    }
+
+    input.value = ''
+}
+
+const handleDocFolderUploadClick = async () => {
+    const kbId = await ensureDocKnowledgeBaseReady()
+    if (!kbId) return
+    pendingUploadKbId.value = kbId
+    docFolderInput.value?.click()
+}
+
+const handleDocFolderChange = async (event: Event) => {
+    const input = event.target as HTMLInputElement
+    const files = input?.files
+    if (!files || files.length === 0) {
+        pendingUploadKbId.value = null
+        return
+    }
+
+    const kbId = pendingUploadKbId.value || (await ensureDocKnowledgeBaseReady())
+    pendingUploadKbId.value = null
+    if (!kbId) {
+        input.value = ''
+        return
+    }
+
+    const vlmEnabled = currentKbInfo.value?.vlm_config?.enabled || false
+
+    const validFiles: File[] = []
+    let invalidCount = 0
+    let hiddenFileCount = 0
+    let imageFilteredCount = 0
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        const relativePath = (file as any).webkitRelativePath || file.name
+        
+        const pathParts = relativePath.split('/')
+        const hasHiddenComponent = pathParts.some((part: string) => part.startsWith('.'))
+        if (hasHiddenComponent) {
+            hiddenFileCount++
+            continue
+        }
+        
+        if (!vlmEnabled) {
+            const fileExt = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase()
+            const imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp']
+            if (imageTypes.includes(fileExt)) {
+                imageFilteredCount++
+                continue
+            }
+        }
+        
+        if (kbFileTypeVerification(file, true)) {
+            invalidCount++
+        } else {
+            validFiles.push(file)
+        }
+    }
+
+    if (validFiles.length === 0) {
+        const totalFiltered = invalidCount + hiddenFileCount + imageFilteredCount
+        if (totalFiltered > 0) {
+            let filterReasons = []
+            if (hiddenFileCount > 0) {
+                filterReasons.push(t('knowledgeBase.hiddenFilesFiltered', { count: hiddenFileCount }))
+            }
+            if (imageFilteredCount > 0) {
+                filterReasons.push(t('knowledgeBase.imagesFilteredNoVLM', { count: imageFilteredCount }))
+            }
+            if (invalidCount > 0) {
+                filterReasons.push(t('knowledgeBase.invalidFilesFiltered', { count: invalidCount }))
+            }
+            MessagePlugin.warning(t('knowledgeBase.noValidFilesInFolder', { total: files.length }) + '\n' + filterReasons.join('\n'))
+        } else {
+            MessagePlugin.error(t('knowledgeBase.noValidFiles'))
+        }
+        input.value = ''
+        return
+    }
+
+    const totalCount = validFiles.length
+    const totalFiltered = invalidCount + hiddenFileCount + imageFilteredCount
+    if (totalFiltered > 0) {
+        let filterInfo = []
+        if (hiddenFileCount > 0) {
+            filterInfo.push(t('knowledgeBase.hiddenFilesFiltered', { count: hiddenFileCount }))
+        }
+        if (imageFilteredCount > 0) {
+            filterInfo.push(t('knowledgeBase.imagesFilteredNoVLM', { count: imageFilteredCount }))
+        }
+        if (invalidCount > 0) {
+            filterInfo.push(t('knowledgeBase.invalidFilesFiltered', { count: invalidCount }))
+        }
+        MessagePlugin.info(
+            t('knowledgeBase.uploadingValidFiles', {
+                valid: totalCount,
+                total: files.length
+            }) + '\n' + filterInfo.join(', ')
+        )
+    } else {
+        MessagePlugin.info(t('knowledgeBase.uploadingFolder', { total: totalCount }))
+    }
+
+    let successCount = 0
+    let failCount = 0
+    const failedFiles: Array<{ name: string; reason: string }> = []
+
+    for (const file of validFiles) {
+        const relativePath = (file as any).webkitRelativePath
+        let fileName = file.name
+        if (relativePath) {
+            const pathParts = relativePath.split('/')
+            if (pathParts.length > 2) {
+                const subPath = pathParts.slice(1, -1).join('/')
+                fileName = `${subPath}/${file.name}`
+            }
+        }
+
+        const uploadId = `${file.name}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+        let progress = 0
+        let status: 'uploading' | 'success' | 'error' = 'uploading'
+        let errorReason: string | undefined
+
+        window.dispatchEvent(new CustomEvent('knowledgeFileUploadStart', {
+            detail: {
+                kbId,
+                uploadId,
+                fileName
+            }
+        }))
+
+        try {
+            await uploadKnowledgeFile(
+                kbId,
+                { file, fileName },
+                (progressEvent: any) => {
+                    if (progressEvent?.total) {
+                        progress = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                        window.dispatchEvent(new CustomEvent('knowledgeFileUploadProgress', {
+                            detail: {
+                                kbId,
+                                uploadId,
+                                progress
+                            }
+                        }))
+                    }
+                }
+            )
+            successCount++
+            status = 'success'
+            progress = 100
+        } catch (error: any) {
+            failCount++
+            errorReason = error?.error?.message || error?.message || t('knowledgeBase.uploadFailed')
+            if (error?.code === 'duplicate_file' || error?.error?.code === 'duplicate_file') {
+                errorReason = t('knowledgeBase.fileExists')
+            }
+            failedFiles.push({ name: fileName, reason: errorReason })
+            status = 'error'
+        } finally {
+            window.dispatchEvent(new CustomEvent('knowledgeFileUploadComplete', {
+                detail: {
+                    kbId,
+                    uploadId,
+                    status,
+                    progress,
+                    error: errorReason,
+                    fileName
+                }
+            }))
+        }
+    }
+
+    if (successCount > 0) {
+        window.dispatchEvent(new CustomEvent('knowledgeFileUploaded', {
+            detail: { kbId }
+        }))
+    }
+
+    if (failCount === 0) {
+        MessagePlugin.success(t('knowledgeBase.uploadAllSuccess', { count: successCount }))
+    } else if (successCount > 0) {
+        const { duplicateCount, nonDuplicateText } = summarizeFailedFiles(failedFiles)
+        const extraSections: string[] = []
+        if (duplicateCount > 0) {
+            extraSections.push(t('knowledgeBase.duplicateFilesSkipped', { count: duplicateCount }))
+        }
+        if (nonDuplicateText) {
+            extraSections.push(t('knowledgeBase.failedFilesList') + '\n' + nonDuplicateText)
+        }
+        const extraContent = extraSections.length ? '\n\n' + extraSections.join('\n\n') : ''
+        MessagePlugin.warning({
+            content: t('knowledgeBase.uploadPartialSuccess', {
+                success: successCount,
+                fail: failCount
+            }) + extraContent,
+            duration: 8000,
+            closeBtn: true
+        })
+    } else {
+        const { duplicateCount, nonDuplicateText } = summarizeFailedFiles(failedFiles)
+        const extraSections: string[] = []
+        if (duplicateCount > 0) {
+            extraSections.push(t('knowledgeBase.duplicateFilesSkipped', { count: duplicateCount }))
+        }
+        if (nonDuplicateText) {
+            extraSections.push(t('knowledgeBase.failedFilesList') + '\n' + nonDuplicateText)
+        }
+        const extraContent = extraSections.length ? '\n\n' + extraSections.join('\n\n') : ''
+        MessagePlugin.error({
+            content: t('knowledgeBase.uploadAllFailed') + extraContent,
+            duration: 8000,
+            closeBtn: true
+        })
+    }
+
+    input.value = ''
+}
+
+const handleDocManualCreate = async () => {
+    const kbId = await ensureDocKnowledgeBaseReady()
+    if (!kbId) return
+    uiStore.openManualEditor({
+        mode: 'create',
+        kbId,
+        status: 'draft',
+        onSuccess: ({ kbId: savedKbId }) => {
+            if (savedKbId) {
+                window.dispatchEvent(new CustomEvent('knowledgeFileUploaded', { detail: { kbId: savedKbId } }))
+            }
+        },
+    })
+}
+
+const handleDocURLImport = async () => {
+    const kbId = await ensureDocKnowledgeBaseReady()
+    if (!kbId) return
+    
+    window.dispatchEvent(new CustomEvent('openURLImportDialog', {
+        detail: { kbId }
+    }))
+}
+
+const dispatchFaqMenuAction = (action: 'create' | 'import' | 'search' | 'export' | 'batch' | 'batchTag' | 'batchEnable' | 'batchDisable' | 'batchDelete', kbId: string) => {
+    window.dispatchEvent(new CustomEvent('faqMenuAction', {
+        detail: { action, kbId }
+    }))
+}
+
+const handleFaqCreateFromMenu = async () => {
+    const kbId = await getCurrentKbId()
+    if (!kbId) {
+        MessagePlugin.warning(t('knowledgeEditor.messages.missingId'))
+        return
+    }
+    dispatchFaqMenuAction('create', kbId)
+}
+
+const handleFaqImportFromMenu = async () => {
+    const kbId = await getCurrentKbId()
+    if (!kbId) {
+        MessagePlugin.warning(t('knowledgeEditor.messages.missingId'))
+        return
+    }
+    dispatchFaqMenuAction('import', kbId)
+}
+
+const handleFaqSearchTestFromMenu = async () => {
+    const kbId = await getCurrentKbId()
+    if (!kbId) {
+        MessagePlugin.warning(t('knowledgeEditor.messages.missingId'))
+        return
+    }
+    dispatchFaqMenuAction('search', kbId)
+}
+
+const handleFaqExportFromMenu = async () => {
+    const kbId = await getCurrentKbId()
+    if (!kbId) {
+        MessagePlugin.warning(t('knowledgeEditor.messages.missingId'))
+        return
+    }
+    dispatchFaqMenuAction('export', kbId)
+}
+
+const faqBatchActionOptions = computed(() => {
+  if (selectedFaqCount.value === 0) {
+    return []
+  }
+  const options = [
+    { 
+      content: `${t('knowledgeEditor.faq.batchUpdateTag')} (${selectedFaqCount.value})`, 
+      value: 'batchTag', 
+      icon: 'folder'
+    }
+  ]
+  
+  if (selectedFaqDisabledCount.value > 0) {
+    options.push({
+      content: `${t('knowledgeEditor.faq.batchEnable')} (${selectedFaqDisabledCount.value})`,
+      value: 'batchEnable',
+      icon: 'check-circle',
+    })
+  }
+  if (selectedFaqEnabledCount.value > 0) {
+    options.push({
+      content: `${t('knowledgeEditor.faq.batchDisable')} (${selectedFaqEnabledCount.value})`,
+      value: 'batchDisable',
+      icon: 'close-circle',
+    })
+  }
+  
+  options.push({
+    content: `${t('knowledgeEditor.faqImport.deleteSelected')} (${selectedFaqCount.value})`,
+    value: 'batchDelete',
+    icon: 'delete',
+  })
+  
+  return options
+})
+
+const handleFaqBatchActionFromMenu = async (data: { value: string }) => {
+  const kbId = await getCurrentKbId()
+  if (!kbId) {
+    MessagePlugin.warning(t('knowledgeEditor.messages.missingId'))
+    return
+  }
+  if (selectedFaqCount.value === 0) {
+    MessagePlugin.warning(t('knowledgeEditor.faq.selectEntriesFirst') || '먼저 작업할 FAQ 항목을 선택해 주세요')
+    return
+  }
+  dispatchFaqMenuAction(data.value as 'batchTag' | 'batchEnable' | 'batchDisable' | 'batchDelete', kbId)
+}
+
+const handleCreateKnowledgeBase = () => {
+    uiStore.openCreateKB()
+}
+
+</script>
+<style lang="less" scoped>
+.aside_box {
+    min-width: 260px;
+    padding: 8px;
+    background: #fff;
+    box-sizing: border-box;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .logo_box {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        .logo{
+            width: 134px;
+            height: auto;
+            margin-left: 24px;
+        }
+    }
+
+    .logo_img {
+        margin-left: 24px;
+        width: 30px;
+        height: 30px;
+        margin-right: 7.25px;
+    }
+
+    .logo_txt {
+        transform: rotate(0.049deg);
+        color: #000000;
+        font-family: "TencentSans";
+        font-size: 24.12px;
+        font-style: normal;
+        font-weight: W7;
+        line-height: 21.7px;
+    }
+
+    .menu_top {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-height: 0;
+    }
+
+    .menu_bottom {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .kb-action-wrapper {
+        border: 1px solid #e7e9eb;
+        border-radius: 8px;
+        padding: 8px;
+        margin-bottom: 12px;
+        background: #fafcfc;
+    }
+
+    .kb-action-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #8b9196;
+        margin-bottom: 6px;
+        padding: 0 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .kb-action-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .kb-action-item {
+        background: #fff;
+        border-radius: 6px;
+        border: 1px solid #eef1f2;
+        transition: background-color 0.08s ease, border-color 0.08s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        cursor: pointer;
+
+        &:hover {
+            background: #f0fdf6;
+            border-color: #10b981;
+
+            .kb-action-icon {
+                color: #059669;
+            }
+
+            .kb-action-title {
+                color: #10b981;
+            }
+        }
+
+        &:active {
+            background: #e6f9f0;
+        }
+    }
+
+    .kb-action-icon-wrapper {
+        width: 28px;
+        height: 28px;
+        border-radius: 5px;
+        background: #f0fdf6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background-color 0.08s ease;
+    }
+
+    .kb-action-icon {
+        color: #10b981;
+        transition: color 0.08s ease;
+    }
+
+    .kb-action-item:hover .kb-action-icon-wrapper {
+        background: #d1fae5;
+    }
+
+    .kb-action-content {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    .kb-action-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: #0f172a;
+        transition: color 0.08s ease;
+        display: inline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex-shrink: 1;
+        min-width: 0;
+    }
+
+    .kb-action-count {
+        font-size: 12px;
+        color: #10b981;
+        font-weight: 600;
+        margin-left: 4px;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    .menu_box {
+        display: flex;
+        flex-direction: column;
+        
+        &.has-submenu {
+            flex: 1;
+            min-height: 0;
+        }
+    }
+
+
+    .upload-file-wrap {
+        padding: 6px;
+        border-radius: 3px;
+        height: 32px;
+        width: 32px;
+        box-sizing: border-box;
+    }
+
+    .upload-file-wrap:hover {
+        background-color: #dbede4;
+        color: #07C05F;
+
+    }
+
+    .upload-file-icon {
+        width: 20px;
+        height: 20px;
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    .active-upload {
+        color: #07C05F;
+    }
+
+    .menu_item_active {
+        border-radius: 4px;
+        background: #07c05f1a !important;
+
+        .menu_icon,
+        .menu_title {
+            color: #07c05f !important;
+        }
+
+        .menu-create-hint {
+            color: #07c05f !important;
+            opacity: 1;
+        }
+    }
+
+    .menu_item_c_active {
+
+        .menu_icon,
+        .menu_title {
+            color: #000000e6;
+        }
+    }
+
+    .menu_p {
+        height: 56px;
+        padding: 6px 0;
+        box-sizing: border-box;
+    }
+
+    .menu_item {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 48px;
+        padding: 13px 8px 13px 16px;
+        box-sizing: border-box;
+        margin-bottom: 4px;
+
+        .menu_item-box {
+            display: flex;
+            align-items: center;
+        }
+
+        &:hover {
+            border-radius: 4px;
+            background: #30323605;
+            color: #00000099;
+
+            .menu_icon,
+            .menu_title {
+                color: #00000099;
+            }
+        }
+    }
+
+    .menu_icon {
+        display: flex;
+        margin-right: 10px;
+        color: #00000099;
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            overflow: hidden;
+        }
+    }
+
+    .menu_title {
+        color: #00000099;
+        text-overflow: ellipsis;
+        font-family: "PingFang SC";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 22px;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 120px;
+        flex: 1;
+    }
+
+    .submenu {
+        font-family: "PingFang SC";
+        font-size: 14px;
+        font-style: normal;
+        overflow-y: auto;
+        scrollbar-width: none;
+        flex: 1;
+        min-height: 0;
+        margin-left: 4px;
+    }
+    
+    .timeline_header {
+        font-family: "PingFang SC";
+        font-size: 12px;
+        font-weight: 600;
+        color: #00000066;
+        padding: 12px 18px 6px 18px;
+        margin-top: 8px;
+        line-height: 20px;
+        user-select: none;
+        
+        &:first-child {
+            margin-top: 4px;
+        }
+    }
+
+    .submenu_item_p {
+        height: 44px;
+        padding: 4px 0px 4px 0px;
+        box-sizing: border-box;
+    }
+
+
+    .submenu_item {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        color: #00000099;
+        font-weight: 400;
+        line-height: 22px;
+        height: 36px;
+        padding-left: 0px;
+        padding-right: 14px;
+        position: relative;
+
+        .submenu_title {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .menu-more-wrap {
+            margin-left: auto;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .menu-more {
+            display: inline-block;
+            font-weight: bold;
+            color: #07C05F;
+        }
+
+        .sub_title {
+            margin-left: 14px;
+        }
+
+        &:hover {
+            background: #30323605;
+            color: #00000099;
+            border-radius: 3px;
+
+            .menu-more {
+                color: #00000099;
+            }
+
+            .menu-more-wrap {
+                opacity: 1;
+            }
+
+            .submenu_title {
+                max-width: 160px !important;
+
+            }
+        }
+    }
+
+    .submenu_item_active {
+        background: #07c05f1a !important;
+        color: #07c05f !important;
+        border-radius: 3px;
+
+        .menu-more {
+            color: #07c05f !important;
+        }
+
+        .menu-more-wrap {
+            opacity: 1;
+        }
+
+        .submenu_title {
+            max-width: 160px !important;
+        }
+    }
+}
+
+
+.kb-dropdown-icon {
+    margin-left: auto;
+    color: #666;
+    transition: transform 0.3s ease, color 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    
+    &.rotate-180 {
+        transform: rotate(180deg);
+    }
+    
+    &:hover {
+        color: #07c05f;
+    }
+    
+    &.active {
+        color: #07c05f;
+    }
+    
+    &.active:hover {
+        color: #05a04f;
+    }
+    
+    svg {
+        width: 12px;
+        height: 12px;
+        transition: inherit;
+    }
+}
+
+.kb-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.kb-dropdown-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+    color: #333;
+    
+    &:hover {
+        background-color: #f5f5f5;
+    }
+    
+    &.active {
+        background-color: #07c05f1a;
+        color: #07c05f;
+        font-weight: 500;
+    }
+    
+    &:first-child {
+        border-radius: 6px 6px 0 0;
+    }
+    
+    &:last-child {
+        border-radius: 0 0 6px 6px;
+    }
+}
+
+.menu_item-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.menu-create-hint {
+    margin-left: auto;
+    margin-right: 8px;
+    font-size: 16px;
+    color: #07c05f;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+}
+
+.menu_item:hover .menu-create-hint {
+    opacity: 1;
+}
+
+.menu_box {
+    position: relative;
+}
+
+.kb-upload-input {
+    display: none;
+}
+</style>
+<style lang="less">
+.t-popup[data-popper-placement^="right"] {
+    .t-popup__content {
+        .t-dropdown__menu {
+            background: #ffffff !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 6px !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+            padding: 4px !important;
+            min-width: 100px !important;
+        }
+
+        .t-dropdown__item {
+            padding: 8px 12px !important;
+            border-radius: 4px !important;
+            margin: 2px 0 !important;
+            transition: all 0.2s ease !important;
+            font-size: 14px !important;
+            color: #333333 !important;
+            min-width: auto !important;
+            max-width: none !important;
+            width: auto !important;
+            cursor: pointer !important;
+
+            &:hover {
+                background: #f5f7fa !important;
+                color: #07c05f !important;
+            }
+
+            .t-dropdown__item-text {
+                color: inherit !important;
+                font-size: 14px !important;
+                line-height: 20px !important;
+                white-space: nowrap !important;
+            }
+        }
+    }
+}
+
+:deep(.t-popconfirm) {
+    .t-popconfirm__content {
+        background: #fff;
+        border: 1px solid #e7e7e7;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        padding: 12px 16px;
+        font-size: 14px;
+        color: #333;
+        max-width: 200px;
+    }
+    
+    .t-popconfirm__arrow {
+        border-bottom-color: #e7e7e7;
+    }
+    
+    .t-popconfirm__arrow::after {
+        border-bottom-color: #fff;
+    }
+    
+    .t-popconfirm__buttons {
+        margin-top: 8px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+    
+    .t-button--variant-outline {
+        border-color: #d9d9d9;
+        color: #666;
+    }
+    
+    .t-button--theme-danger {
+        background-color: #ff4d4f;
+        border-color: #ff4d4f;
+    }
+    
+    .t-button--theme-danger:hover {
+        background-color: #ff7875;
+        border-color: #ff7875;
+    }
+}
+</style>

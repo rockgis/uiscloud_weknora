@@ -1,0 +1,102 @@
+name: ❓ 질문
+description: WeKnora에 관한 질문을 하거나 도움을 요청합니다
+title: "[Question]: "
+labels: ["question", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        질문 환영합니다! 충분한 정보를 제공해주시면 더 잘 도와드릴 수 있습니다.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 질문 유형
+      description: 질문 유형을 선택해주세요
+      options:
+        - 설치 및 배포
+        - 설정 문제
+        - 사용 방법
+        - 성능 문제
+        - 연동 문제
+        - 기타
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: 질문 내용
+      description: 질문 내용을 상세하게 설명해주세요
+      placeholder: "어떤 문제가 있으신가요? 어떤 도움이 필요하신가요?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 배경 정보
+      description: 관련 배경 정보를 제공해주세요
+      placeholder: |
+        - 무엇을 하려고 하시나요?
+        - 기대하는 결과는 무엇인가요?
+        - 이미 시도해본 것은 무엇인가요?
+
+  - type: input
+    id: os
+    attributes:
+      label: 운영 체제
+      description: 현재 사용 중인 운영 체제
+      placeholder: "예: macOS 13.0, Ubuntu 20.04, Windows 11"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 기타 환경 정보
+      description: 기타 관련 환경 정보를 제공해주세요
+      placeholder: |
+        - WeKnora 버전: [예: v1.0.0]
+        - 배포 방식: [예: Docker, 소스 빌드]
+        - 기타 관련 정보...
+
+  - type: markdown
+    attributes:
+      value: |
+        ## 📋 로그 수집 가이드 (필요한 경우)
+
+        오류나 디버깅이 필요한 문제라면 관련 로그를 수집해주세요:
+
+        ```bash
+        docker compose logs -f --tail=1000 app docreader postgres
+        ```
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 관련 로그
+      description: 관련 로그나 오류 정보가 있으면 여기에 붙여넣어 주세요
+      placeholder: "관련 로그나 오류 정보를 붙여넣어 주세요..."
+      render: shell
+
+  - type: textarea
+    id: research
+    attributes:
+      label: 검토한 자료
+      description: 이미 검토한 문서, 이슈 또는 기타 자료를 나열해주세요
+      placeholder: |
+        - 검토한 문서: [예: README.md, API.md]
+        - 검토한 이슈: [예: #123, #456]
+        - 기타 자료: [예: 공식 문서, Stack Overflow]
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 확인 사항
+      description: 다음 사항을 확인해주세요
+      options:
+        - label: 기존 이슈와 문서를 검색했습니다
+          required: true
+        - label: 문제 이해를 위한 충분한 정보를 제공했습니다
+          required: true

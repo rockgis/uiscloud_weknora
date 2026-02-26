@@ -1,0 +1,43 @@
+# 민감한 정보가 포함된 .env 파일 및 기타 설정 파일 무시
+.env
+# 단, 예시 파일은 무시하지 않음
+!.env.example
+*.pem
+*_key
+*_secret
+*.key
+*.crt
+
+# IDE 및 편집기 파일
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 빌드 및 의존성 파일
+node_modules/
+/dist/
+/build/
+*.log
+
+# 임시 파일
+tmp/
+temp/
+logs/
+*.pid
+
+WeKnora
+/models/
+test/data/mswag.txt
+data/files/
+
+.venv/
+**/__pycache__
+.python-version
+
+### macOS
+# General
+.DS_Store
+/scripts/scale_dev_jobs.sh
+server
+frontend/.vite
