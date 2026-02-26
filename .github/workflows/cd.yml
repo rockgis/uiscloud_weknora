@@ -1,10 +1,11 @@
-name: Build and Push Docker Image
+name: CD
+
 on:
   push:
-    tags:
-      - "v*"
     branches:
       - main
+    tags:
+      - "v*"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -12,28 +13,29 @@ concurrency:
 
 jobs:
   build-ui:
+    name: Build UI Image
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to Docker Hub
+      - name: Login to ghcr.io
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/weknora-ui
+          images: ghcr.io/${{ github.repository_owner }}/weknora-ui
 
-      - name: Build ui Image
-        uses: docker/build-push-action@v3
+      - name: Build and push UI image
+        uses: docker/build-push-action@v6
         with:
           push: true
           platforms: linux/amd64,linux/arm64
@@ -41,21 +43,17 @@ jobs:
           context: ./frontend
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/weknora-ui:cache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/weknora-ui:cache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/weknora-ui:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/weknora-ui:buildcache,mode=max
 
   build-docreader:
+    name: Build Docreader Image
     runs-on: ubuntu-latest
     steps:
-      - name: Free Disk Space
+      - name: Free disk space
         uses: jlumbroso/free-disk-space@main
         with:
-          # this might remove tools that are actually needed,
-          # if set to "true" but frees about 6 GB
           tool-cache: false
-          
-          # all of these default to true, but feel free to set to
-          # "false" if necessary for your workflow
           android: true
           dotnet: true
           haskell: true
@@ -63,26 +61,26 @@ jobs:
           docker-images: true
           swap-storage: true
 
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to Docker Hub
+      - name: Login to ghcr.io
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/weknora-docreader
+          images: ghcr.io/${{ github.repository_owner }}/weknora-docreader
 
-      - name: Build docreader Image
-        uses: docker/build-push-action@v3
+      - name: Build and push docreader image
+        uses: docker/build-push-action@v6
         with:
           push: true
           platforms: linux/amd64,linux/arm64
@@ -90,10 +88,11 @@ jobs:
           context: .
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/weknora-docreader:cache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/weknora-docreader:cache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/weknora-docreader:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/weknora-docreader:buildcache,mode=max
 
   build-app:
+    name: Build App Image (${{ matrix.arch }})
     strategy:
       matrix:
         include:
@@ -105,24 +104,24 @@ jobs:
             runs: ubuntu-24.04-arm
     runs-on: ${{ matrix.runs }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
         id: setup-buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Login to Docker Hub
+      - name: Login to ghcr.io
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/weknora-app
+          images: ghcr.io/${{ github.repository_owner }}/weknora-app
 
       - name: Prepare version info
         id: version
@@ -132,14 +131,14 @@ jobs:
           echo "commit_id=$COMMIT_ID" >> $GITHUB_OUTPUT
           echo "build_time=$BUILD_TIME" >> $GITHUB_OUTPUT
           echo "go_version=$GO_VERSION" >> $GITHUB_OUTPUT
-          
+
           platform=${{ matrix.platform }}
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
           ./scripts/get_version.sh info
-      
-      - name: Build Cache for Docker
-        uses: actions/cache@v4
+
+      - name: Build cache for Docker
         id: cache
+        uses: actions/cache@v4
         with:
           path: go-pkg-mod
           key: ${{ env.PLATFORM_PAIR }}-go-build-cache-${{ hashFiles('**/go.sum') }}
@@ -154,24 +153,22 @@ jobs:
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
-      - name: Build app Image
+      - name: Build and push app image by digest
         id: build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
-          push: true
           platforms: ${{ matrix.platform }}
           file: docker/Dockerfile.app
           context: .
           build-args: |
-            ${{ format('VERSION_ARG={0}', steps.version.outputs.version) }}
-            ${{ format('COMMIT_ID_ARG={0}', steps.version.outputs.commit_id) }}
-            ${{ format('BUILD_TIME_ARG={0}', steps.version.outputs.build_time) }}
-            ${{ format('GO_VERSION_ARG={0}', steps.version.outputs.go_version) }}
+            VERSION_ARG=${{ steps.version.outputs.version }}
+            COMMIT_ID_ARG=${{ steps.version.outputs.commit_id }}
+            BUILD_TIME_ARG=${{ steps.version.outputs.build_time }}
+            GO_VERSION_ARG=${{ steps.version.outputs.go_version }}
           labels: ${{ steps.meta.outputs.labels }}
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/weknora-app
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/weknora-app:cache-${{ env.PLATFORM_PAIR }}
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/weknora-app:cache-${{ env.PLATFORM_PAIR }},mode=max
-          outputs: type=image,push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/weknora-app:buildcache-${{ matrix.arch }}
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/weknora-app:buildcache-${{ matrix.arch }},mode=max
+          outputs: type=image,push-by-digest=true,name=ghcr.io/${{ github.repository_owner }}/weknora-app,name-canonical=true,push=true
 
       - name: Export digest
         run: |
@@ -188,6 +185,7 @@ jobs:
           retention-days: 1
 
   merge:
+    name: Merge App Multi-arch Manifest
     runs-on: ubuntu-latest
     needs:
       - build-app
@@ -199,11 +197,12 @@ jobs:
           pattern: digests-*
           merge-multiple: true
 
-      - name: Login to Docker Hub
+      - name: Login to ghcr.io
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -212,14 +211,16 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/weknora-app
+          images: ghcr.io/${{ github.repository_owner }}/weknora-app
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests
         run: |
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ secrets.DOCKERHUB_USERNAME }}/weknora-app@sha256:%s ' *)
+          docker buildx imagetools create \
+            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf 'ghcr.io/${{ github.repository_owner }}/weknora-app@sha256:%s ' *)
 
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect ${{ secrets.DOCKERHUB_USERNAME }}/weknora-app:${{ steps.meta.outputs.version }}
+          docker buildx imagetools inspect \
+            ghcr.io/${{ github.repository_owner }}/weknora-app:${{ steps.meta.outputs.version }}
