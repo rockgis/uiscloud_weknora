@@ -266,7 +266,7 @@ go version  # go version go1.24.0 darwin/arm64
 
 # Node.js 설치 (20.19+ or 22.12+)
 brew install node
-node --version  # v20.19.0
+node --version  # v22.x
 
 # Docker Desktop
 brew install --cask docker
@@ -333,7 +333,7 @@ go mod download
 
 # 프론트엔드 의존성
 cd frontend
-npm install
+pnpm install
 cd ..
 ```
 
@@ -1087,13 +1087,13 @@ node --version
 brew upgrade node
 
 # 또는 nvm 사용
-nvm install 20.19
-nvm use 20.19
+nvm install 22
+nvm use 22
 
 # 의존성 재설치
 cd frontend
-rm -rf node_modules package-lock.json
-npm install
+rm -rf node_modules pnpm-lock.yaml
+pnpm install
 ```
 
 #### 문제 2: 페이지가 로드되지 않음

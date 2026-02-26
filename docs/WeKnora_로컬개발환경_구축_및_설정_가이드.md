@@ -363,7 +363,7 @@ grep -r "panic(" --include="*.go" internal/
 # Go 설치 (1.24 이상)
 brew install go
 
-# Node.js 설치 (20.19+ 또는 22.12+)
+# Node.js 설치 (22+)
 brew install node
 
 # Docker Desktop 설치
@@ -462,7 +462,7 @@ make dev-app
 ```bash
 # 의존성 설치 (최초 1회)
 cd frontend
-npm install
+pnpm install
 
 # 개발 서버 시작
 cd ..
@@ -765,7 +765,7 @@ brew services stop postgresql@16
 
 ### 2. 프론트엔드가 시작되지 않음
 
-**문제**: `Node.js version requires 20.19+ or 22.12+`
+**문제**: `Node.js version requires 22+`
 
 **해결**:
 ```bash
@@ -773,13 +773,13 @@ brew services stop postgresql@16
 brew upgrade node
 
 # 또는 nvm 사용
-nvm install 20.19
-nvm use 20.19
+nvm install 22
+nvm use 22
 
 # 의존성 재설치
 cd frontend
-rm -rf node_modules package-lock.json
-npm install
+rm -rf node_modules pnpm-lock.yaml
+pnpm install
 ```
 
 ### 3. Ollama 연결 실패

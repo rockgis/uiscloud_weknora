@@ -90,7 +90,7 @@ WeKnora는 **문서 이해 및 시맨틱 검색**을 위한 LLM 기반 RAG (Retr
 # 필수 소프트웨어
 - Docker Desktop (실행 중)
 - Go 1.24+
-- Node.js 18+ / npm 또는 pnpm
+- Node.js 22+ / pnpm
 - Python 3.11+
 - Ollama (설치 및 실행 중)
 
