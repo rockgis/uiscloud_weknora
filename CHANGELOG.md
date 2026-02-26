@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### ⚙️ CI/CD
+- **REFACTORED**: GitHub Actions workflows
+  - Replaced single `docker-image.yml` with separate `ci.yml` and `cd.yml` workflows
+  - `ci.yml`: Go lint, Go test, and frontend build jobs triggered on push/PR to main
+  - `cd.yml`: Multi-arch Docker image build & push triggered on main push and `v*` tags
+  - Migrated container registry from Docker Hub to **ghcr.io** (GitHub Container Registry)
+  - Authentication now uses `GITHUB_TOKEN` — no Docker Hub secrets required
+  - Upgraded `docker/build-push-action` v3 → v6, `actions/checkout` v3 → v4
+
+### 📚 Documentation
+- **UPDATED**: Korean set as the default README (`README.md` ← `README_KO.md`; English moved to `README_EN.md`)
+- **UPDATED**: Makefile `help` target translated from Chinese to Korean
+- **FIXED**: Broken `docs/dev-guide.md` link → `docs/개발가이드.md`
+- **UPDATED**: Frontend package manager references: `npm` → `pnpm` across all docs
+- **UPDATED**: Node.js minimum version: `18+` → `22+`
+- **UPDATED**: Air hot-reload install path: `github.com/cosmtrek/air` → `github.com/air-verse/air`
+- **UPDATED**: `package-lock.json` references → `pnpm-lock.yaml`
+- **UPDATED**: Node version examples in troubleshooting sections: `v20.19` → `v22`
+
+---
+
 ## [0.2.2] - 2025-12-15
 
 ### 🚀 New Features
@@ -313,6 +336,7 @@ All notable changes to this project will be documented in this file.
 - Docker Compose for quick startup and service orchestration.
 - MCP server support for integrating with MCP-compatible clients.
 
+[Unreleased]: https://github.com/Tencent/WeKnora/compare/v0.2.2...HEAD
 [0.2.2]: https://github.com/Tencent/WeKnora/tree/v0.2.2
 [0.2.1]: https://github.com/Tencent/WeKnora/tree/v0.2.1
 [0.2.0]: https://github.com/Tencent/WeKnora/tree/v0.2.0
