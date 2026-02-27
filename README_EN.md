@@ -36,7 +36,7 @@
 <p align="center">
   <h4 align="center">
 
-  [Overview](#-overview) • [Architecture](#-architecture) • [Key Features](#-key-features) • [Getting Started](#-getting-started) • [API Reference](#-api-reference) • [Developer Guide](#-developer-guide)
+  [Overview](#-overview) • [Architecture](#-architecture) • [Key Features](#-key-features) • [Getting Started](#-getting-started) • [Deployment Guide](#-deployment-guide) • [API Reference](#-api-reference) • [Developer Guide](#-developer-guide)
   
   </h4>
 </p>
@@ -124,6 +124,18 @@ uiscloud_weknora employs a modern modular design to build a complete document un
 | Task Management | ✅ MQ async tasks, automatic database migration | MQ-based async task state maintenance, support for automatic database schema and data migration during version upgrades |
 
 ## 🚀 Getting Started
+
+### ⚡ One-Line Install (Recommended for Production)
+
+Deploy using official images from GitHub Releases — no source code required.
+
+```bash
+curl -fsSL https://github.com/rockgis/uiscloud_weknora/releases/latest/download/install.sh | bash
+```
+
+See the **[Deployment Guide](./docs/배포_가이드.md)** for full details.
+
+---
 
 ### 🛠 Prerequisites
 
@@ -321,6 +333,18 @@ For detailed configuration, please refer to the [Knowledge Graph Configuration G
 ### MCP Server
 
 Please refer to the [MCP Configuration Guide](./mcp-server/MCP_CONFIG.md) for the necessary setup.
+
+## 🚢 Deployment Guide
+
+Deploy WeKnora to a server using official Docker images from GitHub Releases.
+
+| Item | Details |
+|------|---------|
+| Image Registry | `ghcr.io/rockgis/weknora-{ui,app,docreader}` |
+| One-Line Install | `curl -fsSL .../install.sh \| bash` |
+| Update | `docker compose pull && docker compose up -d` |
+
+Full guide (install, configure, update, backup, troubleshoot): **[docs/배포_가이드.md](./docs/배포_가이드.md)**
 
 ## 📘 API Reference
 
