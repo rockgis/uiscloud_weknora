@@ -140,23 +140,6 @@ jobs:
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
           ./scripts/get_version.sh info
 
-      - name: Build cache for Docker
-        id: cache
-        uses: actions/cache@v4
-        with:
-          path: go-pkg-mod
-          key: ${{ env.PLATFORM_PAIR }}-go-build-cache-${{ hashFiles('**/go.sum') }}
-
-      - name: Inject go-build-cache
-        uses: reproducible-containers/buildkit-cache-dance@v3
-        with:
-          builder: ${{ steps.setup-buildx.outputs.name }}
-          cache-map: |
-            {
-              "go-pkg-mod": "/go/pkg/mod"
-            }
-          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
-
       - name: Build and push app image by digest
         id: build
         uses: docker/build-push-action@v6
