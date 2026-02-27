@@ -36,7 +36,10 @@ jobs:
           cache: true
 
       - name: Run tests
-        run: go test -v -coverprofile=coverage.out ./...
+        # docreader/client 패키지는 실행 중인 gRPC 서버가 필요한 통합 테스트이므로 CI에서 제외
+        run: |
+          go test -v -coverprofile=coverage.out \
+            $(go list ./... | grep -v 'docreader/client')
 
       - name: Show coverage summary
         run: go tool cover -func=coverage.out | tail -1
@@ -55,6 +58,8 @@ jobs:
           node-version: 22
 
       - uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Install dependencies
         run: pnpm install
