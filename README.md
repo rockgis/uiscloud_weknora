@@ -36,7 +36,7 @@
 <p align="center">
   <h4 align="center">
 
-  [개요](#-개요) • [아키텍처](#-아키텍처) • [주요 기능](#-주요-기능) • [시작하기](#-시작하기) • [API 레퍼런스](#-api-레퍼런스) • [개발자 가이드](#-개발자-가이드)
+  [개요](#-개요) • [아키텍처](#-아키텍처) • [주요 기능](#-주요-기능) • [시작하기](#-시작하기) • [배포 가이드](#-배포-가이드) • [API 레퍼런스](#-api-레퍼런스) • [개발자 가이드](#-개발자-가이드)
 
   </h4>
 </p>
@@ -124,6 +124,18 @@ uiscloud_weknora는 문서 이해 및 검색 파이프라인을 완성하기 위
 | 작업 관리 | ✅ MQ 비동기 작업, 자동 데이터베이스 마이그레이션 | MQ 기반 비동기 작업 상태 유지, 버전 업그레이드 시 자동 데이터베이스 스키마 및 데이터 마이그레이션 지원 |
 
 ## 🚀 시작하기
+
+### ⚡ 원라인 설치 (프로덕션 배포 권장)
+
+소스 코드 없이 GitHub Releases의 공식 이미지로 바로 설치합니다.
+
+```bash
+curl -fsSL https://github.com/rockgis/uiscloud_weknora/releases/latest/download/install.sh | bash
+```
+
+자세한 내용은 **[배포 가이드](./docs/배포_가이드.md)** 를 참조하세요.
+
+---
 
 ### 🛠 사전 요구 사항
 
@@ -321,6 +333,18 @@ uiscloud_weknora는 문서를 지식 그래프로 변환하여 문서의 다른 
 ### MCP Server
 
 필요한 설정은 [MCP 설정 가이드](./mcp-server/MCP_CONFIG.md)를 참조하세요.
+
+## 🚢 배포 가이드
+
+GitHub Releases의 공식 Docker 이미지를 사용하여 서버에 배포하는 방법입니다.
+
+| 항목 | 내용 |
+|------|------|
+| 이미지 저장소 | `ghcr.io/rockgis/weknora-{ui,app,docreader}` |
+| 원라인 설치 | `curl -fsSL .../install.sh \| bash` |
+| 업데이트 | `docker compose pull && docker compose up -d` |
+
+전체 가이드 (설치, 설정, 업데이트, 백업, 문제 해결): **[docs/배포_가이드.md](./docs/배포_가이드.md)**
 
 ## 📘 API 레퍼런스
 
