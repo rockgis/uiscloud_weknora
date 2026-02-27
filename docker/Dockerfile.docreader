@@ -1,15 +1,15 @@
 # =========================
-# 构建阶段
+# Build stage
 # =========================
 FROM python:3.10.18-bookworm AS builder
 
-# 切换 apt 源到清华
+# Switch apt mirror to Tsinghua (speeds up builds in China; remove if not needed)
 RUN sed -i 's@http://deb.debian.org@https://mirrors.tuna.tsinghua.edu.cn@g' /etc/apt/sources.list.d/debian.sources && \
     sed -i 's@http://security.debian.org@https://mirrors.tuna.tsinghua.edu.cn@g' /etc/apt/sources.list.d/debian.sources
 
 WORKDIR /app
 
-# 安装构建依赖
+# Install build dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
     python3-dev \
@@ -25,11 +25,11 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# 检查是否存在本地protoc安装包，如果存在则离线安装，否则在线安装,其他安装包按需求添加
+# Install protoc: use local package if available (offline), otherwise download from network
 ARG TARGETARCH
 COPY packages/ /app/packages/
-RUN echo "检查本地protoc安装包..." && \
-    # 根据目标架构选择正确的protoc包名
+RUN echo "Checking for local protoc package..." && \
+    # Select protoc binary name based on target architecture
     case ${TARGETARCH} in \
         "amd64") PROTOC_ARCH="x86_64" ;; \
         "arm64") PROTOC_ARCH="aarch_64" ;; \
@@ -38,69 +38,69 @@ RUN echo "检查本地protoc安装包..." && \
     esac && \
     PROTOC_PACKAGE="protoc-3.19.4-linux-${PROTOC_ARCH}.zip" && \
     if [ -f "/app/packages/${PROTOC_PACKAGE}" ]; then \
-        echo "发现本地protoc安装包，将进行离线安装"; \
-        # 离线安装：使用本地包（精确路径避免歧义）
+        echo "Local protoc package found, installing offline"; \
+        # Offline install: use local package
         cp /app/packages/${PROTOC_PACKAGE} /app/ && \
         unzip -o /app/${PROTOC_PACKAGE} -d /usr/local && \
         chmod +x /usr/local/bin/protoc && \
         rm -f /app/${PROTOC_PACKAGE}; \
     else \
-        echo "未发现本地protoc安装包，将进行在线安装"; \
-        # 在线安装：从网络下载
+        echo "No local protoc package found, downloading from network"; \
+        # Online install: download from GitHub
         curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v3.19.4/${PROTOC_PACKAGE} && \
         unzip -o ${PROTOC_PACKAGE} -d /usr/local && \
         chmod +x /usr/local/bin/protoc && \
         rm -f ${PROTOC_PACKAGE}; \
     fi
 
-# 预下载 PP-OCRv4 模型
+# Pre-download PP-OCRv4 models
 RUN mkdir -p /root/.paddleocr/whl/det/ch && \
     mkdir -p /root/.paddleocr/whl/rec/ch && \
     mkdir -p /root/.paddleocr/whl/cls/ch && \
-    # 下载检测模型
+    # Download detection model
     wget https://paddleocr.bj.bcebos.com/PP-OCRv4/chinese/ch_PP-OCRv4_det_infer.tar \
         -O /root/.paddleocr/whl/det/ch/ch_PP-OCRv4_det_infer.tar && \
     tar -xf /root/.paddleocr/whl/det/ch/ch_PP-OCRv4_det_infer.tar -C /root/.paddleocr/whl/det/ch/ && \
-    # 下载识别模型
+    # Download recognition model
     wget https://paddleocr.bj.bcebos.com/PP-OCRv4/chinese/ch_PP-OCRv4_rec_infer.tar \
         -O /root/.paddleocr/whl/rec/ch/ch_PP-OCRv4_rec_infer.tar && \
     tar -xf /root/.paddleocr/whl/rec/ch/ch_PP-OCRv4_rec_infer.tar -C /root/.paddleocr/whl/rec/ch/ && \
-    # 下载文本方向分类模型（用于判断文本是否需要旋转）
+    # Download text direction classification model
     wget https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_infer.tar \
         -O /root/.paddleocr/whl/cls/ch_ppocr_mobile_v2.0_cls_infer.tar && \
     tar -xf /root/.paddleocr/whl/cls/ch_ppocr_mobile_v2.0_cls_infer.tar -C /root/.paddleocr/whl/cls/ && \
-    # 清理压缩包
+    # Remove downloaded tarballs
     rm -f /root/.paddleocr/whl/det/ch/ch_PP-OCRv4_det_infer.tar && \
     rm -f /root/.paddleocr/whl/rec/ch/ch_PP-OCRv4_rec_infer.tar && \
     rm -f /root/.paddleocr/whl/cls/ch_ppocr_mobile_v2.0_cls_infer.tar
 
-# 复制依赖文件
+# Copy dependency files and install Python packages
 COPY docreader/pyproject.toml docreader/uv.lock ./
 RUN pip install uv --break-system-packages && \
     python -m uv sync --locked --no-dev
 
-# 复制源代码和生成脚本
+# Copy source code and proto generation script
 COPY docreader docreader
 
-# 生成 protobuf 代码
+# Generate protobuf code
 RUN chmod +x docreader/scripts/generate_proto.sh && \
     bash docreader/scripts/generate_proto.sh
 
-# 确保模型目录存在
+# Verify model directory exists
 RUN ls -la /root/.paddleocr/whl/
 
 # =========================
-# 运行阶段
+# Runtime stage
 # =========================
 FROM python:3.10.18-bookworm AS runner
 
-# 切换 apt 源到清华
+# Switch apt mirror to Tsinghua (speeds up builds in China; remove if not needed)
 RUN sed -i 's@http://deb.debian.org@https://mirrors.tuna.tsinghua.edu.cn@g' /etc/apt/sources.list.d/debian.sources && \
     sed -i 's@http://security.debian.org@https://mirrors.tuna.tsinghua.edu.cn@g' /etc/apt/sources.list.d/debian.sources
 
 WORKDIR /app
 
-# 安装运行时依赖
+# Install runtime dependencies
 RUN apt-get update && apt-get install -y \
     libjpeg62-turbo \
     libpq5 \
@@ -123,10 +123,10 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# 安装 grpc_health_probe
+# Install grpc_health_probe
 ARG TARGETARCH
 RUN GRPC_HEALTH_PROBE_VERSION=v0.4.24 && \
-    # 根据目标架构选择正确的二进制文件
+    # Select binary based on target architecture
     case ${TARGETARCH} in \
         "amd64") ARCH="amd64" ;; \
         "arm64") ARCH="arm64" ;; \
@@ -135,8 +135,8 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.4.24 && \
     esac && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-${ARCH} && \
     chmod +x /bin/grpc_health_probe
-    
-# 从构建阶段复制已安装的依赖和生成的代码
+
+# Copy installed dependencies and generated code from build stage
 ENV VIRTUAL_ENV=/app/.venv
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
@@ -144,7 +144,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 COPY --from=builder /usr/local/bin /usr/local/bin
 COPY --from=builder /root/.paddleocr /root/.paddleocr
 
-# 安装 Playwright 浏览器
+# Install Playwright browser
 RUN python -m playwright install webkit
 RUN python -m playwright install-deps webkit
 
@@ -154,8 +154,8 @@ RUN python -m playwright install-deps webkit
 COPY docreader/pyproject.toml docreader/uv.lock ./
 COPY --from=builder /app/docreader docreader
 
-# 暴露 gRPC 端口
+# Expose gRPC port
 EXPOSE 50051
 
-# 直接运行 Python 服务（日志输出到 stdout/stderr）
+# Run Python service (logs to stdout/stderr)
 CMD ["uv", "run", "-m", "docreader.main"]

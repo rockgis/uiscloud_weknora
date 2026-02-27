@@ -3,13 +3,13 @@ FROM golang:1.24-alpine AS builder
 
 WORKDIR /app
 
-# 通过构建参数接收敏感信息
+# Receive optional build arguments for Go proxy and private modules
 ARG GOPRIVATE_ARG
 ARG GOPROXY_ARG
 ARG GOSUMDB_ARG=off
 ARG APK_MIRROR_ARG="mirrors.tencent.com"
 
-# 设置Go环境变量
+# Set Go environment variables
 ENV GOPRIVATE=${GOPRIVATE_ARG}
 ENV GOPROXY=${GOPROXY_ARG}
 ENV GOSUMDB=${GOSUMDB_ARG}
