@@ -187,12 +187,12 @@ const updateDropdownPosition = () => {
     if (typeof anchor.getBoundingClientRect === 'function') {
       rect = anchor.getBoundingClientRect()
       console.log('[KB Selector] Button rect:', {
-        top: rect.top,
-        bottom: rect.bottom,
-        left: rect.left,
-        right: rect.right,
-        width: rect.width,
-        height: rect.height
+        top: rect!.top,
+        bottom: rect!.bottom,
+        left: rect!.left,
+        right: rect!.right,
+        width: rect!.width,
+        height: rect!.height
       })
     } else if (anchor.width !== undefined && anchor.left !== undefined) {
       rect = anchor as DOMRect

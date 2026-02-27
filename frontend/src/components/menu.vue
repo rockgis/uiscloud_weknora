@@ -986,7 +986,7 @@ const handleDocFolderChange = async (event: Event) => {
             if (error?.code === 'duplicate_file' || error?.error?.code === 'duplicate_file') {
                 errorReason = t('knowledgeBase.fileExists')
             }
-            failedFiles.push({ name: fileName, reason: errorReason })
+            failedFiles.push({ name: fileName, reason: errorReason ?? '' })
             status = 'error'
         } finally {
             window.dispatchEvent(new CustomEvent('knowledgeFileUploadComplete', {

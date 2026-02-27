@@ -17,7 +17,7 @@ marked.use({
 });
 const renderer = new marked.Renderer();
 let page = 1;
-let doc = null;
+let doc: Element | null = null;
 let down = ref()
 let mdContentWrap = ref()
 let url = ref('')
@@ -26,8 +26,8 @@ const originalContent = ref<string>('');
 const loadingOriginal = ref(false);
 onMounted(() => {
   nextTick(() => {
-    doc = document.getElementsByClassName('t-drawer__body')[0]
-    doc.addEventListener('scroll', handleDetailsScroll);
+    doc = document.getElementsByClassName('t-drawer__body')[0] ?? null
+    doc?.addEventListener('scroll', handleDetailsScroll);
   })
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -46,12 +46,12 @@ onUpdated(() => {
   page = 1
 })
 onUnmounted(() => {
-  doc.removeEventListener('scroll', handleDetailsScroll);
+  doc?.removeEventListener('scroll', handleDetailsScroll);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   delete window.copyCodeBlock;
 })
-const checkImage = (url) => {
+const checkImage = (url: string) => {
   return new Promise((resolve) => {
     const img = new Image();
     img.onload = () => resolve(true);
@@ -60,10 +60,10 @@ const checkImage = (url) => {
   });
 };
 renderer.image = function (href, title, text) {
-  if (!isValidImageURL(href)) {
+  if (!href || !isValidImageURL(href)) {
     return `<p>${t('error.invalidImageLink')}</p>`;
   }
-  
+
   const safeImage = createSafeImage(href, text || '', title || '');
   return `<figure>
                 ${safeImage}
@@ -123,7 +123,7 @@ const loadOriginalContent = async () => {
   loadingOriginal.value = true;
   try {
     const blob = await downKnowledgeDetails(props.details.id);
-    const text = await blob.text();
+    const text = await (blob as unknown as Blob).text();
     originalContent.value = text;
   } catch (error: any) {
     console.error('Failed to load original content:', error);
@@ -146,7 +146,7 @@ watch(() => props.details.md, (newVal) => {
   nextTick(async () => {
     const images = mdContentWrap.value.querySelectorAll('img.markdown-image');
     if (images) {
-      images.forEach(async item => {
+      images.forEach(async (item: HTMLImageElement) => {
         const isValid = await checkImage(item.src);
         if (!isValid) {
           item.remove();
@@ -156,7 +156,7 @@ watch(() => props.details.md, (newVal) => {
   })
 }, { immediate: true, deep: true })
 
-const processMarkdown = (markdownText) => {
+const processMarkdown = (markdownText: string) => {
   if (!markdownText || typeof markdownText !== 'string') return '';
 
   let processedText = markdownText.replace(/<p>\s*(\|[\s\S]*?\|)\s*<\/p>/gi, '\n$1\n');
@@ -173,7 +173,7 @@ const processMarkdown = (markdownText) => {
 };
 const handleClose = () => {
   emit("closeDoc", false);
-  doc.scrollTop = 0;
+  if (doc) (doc as HTMLElement).scrollTop = 0;
   viewMode.value = 'chunks';
   originalContent.value = '';
 };
@@ -345,7 +345,7 @@ const downloadFile = () => {
         if (url.value) {
           URL.revokeObjectURL(url.value);
         }
-        url.value = URL.createObjectURL(result);
+        url.value = URL.createObjectURL(result as unknown as Blob);
         const link = document.createElement("a");
         link.style.display = "none";
         link.setAttribute("href", url.value);
