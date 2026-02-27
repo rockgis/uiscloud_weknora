@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/Tencent/WeKnora/internal/types"
-	secutils "github.com/Tencent/uiscloud_weknora/internal/utils"
+	secutils "github.com/Tencent/WeKnora/internal/utils"
 )
 
 // PluginIntoChatMessage handles the transformation of search results into chat messages

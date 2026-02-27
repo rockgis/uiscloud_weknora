@@ -65,7 +65,7 @@ EOF
         ;;
     "ldflags")
         # Go ldflags 형식 출력
-        echo "-X 'github.com/Tencent/uiscloud_weknora/internal/handler.Version=$VERSION' -X 'github.com/Tencent/uiscloud_weknora/internal/handler.CommitID=$COMMIT_ID' -X 'github.com/Tencent/uiscloud_weknora/internal/handler.BuildTime=$BUILD_TIME' -X 'github.com/Tencent/uiscloud_weknora/internal/handler.GoVersion=$GO_VERSION'"
+        echo "-X 'github.com/Tencent/WeKnora/internal/handler.Version=$VERSION' -X 'github.com/Tencent/WeKnora/internal/handler.CommitID=$COMMIT_ID' -X 'github.com/Tencent/WeKnora/internal/handler.BuildTime=$BUILD_TIME' -X 'github.com/Tencent/WeKnora/internal/handler.GoVersion=$GO_VERSION'"
         ;;
     "info")
         # 정보 형식 출력

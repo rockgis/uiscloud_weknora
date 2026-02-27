@@ -15,7 +15,7 @@ import (
 	"github.com/Tencent/WeKnora/internal/middleware"
 	"github.com/Tencent/WeKnora/internal/types/interfaces"
 
-	_ "github.com/Tencent/uiscloud_weknora/docs" // swagger docs
+	_ "github.com/Tencent/WeKnora/docs" // swagger docs
 )
 
 type RouterParams struct {

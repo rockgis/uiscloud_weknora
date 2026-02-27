@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	werrors "github.com/Tencent/uiscloud_weknora/internal/errors"
+	werrors "github.com/Tencent/WeKnora/internal/errors"
 	"github.com/Tencent/WeKnora/internal/logger"
 	"github.com/Tencent/WeKnora/internal/types"
 	"github.com/Tencent/WeKnora/internal/types/interfaces"

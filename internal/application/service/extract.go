@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	chatpipline "github.com/Tencent/uiscloud_weknora/internal/application/service/chat_pipline"
+	chatpipline "github.com/Tencent/WeKnora/internal/application/service/chat_pipline"
 	"github.com/Tencent/WeKnora/internal/config"
 	"github.com/Tencent/WeKnora/internal/logger"
 	"github.com/Tencent/WeKnora/internal/types"
