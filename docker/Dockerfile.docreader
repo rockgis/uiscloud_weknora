@@ -154,8 +154,15 @@ RUN python -m playwright install-deps webkit
 COPY docreader/pyproject.toml docreader/uv.lock ./
 COPY --from=builder /app/docreader docreader
 
+# Create non-root user and set permissions
+RUN adduser --disabled-password --gecos '' appuser && \
+    chown -R appuser:appuser /app /root/.paddleocr
+
 # Expose gRPC port
 EXPOSE 50051
+
+# Switch to non-root user
+USER appuser
 
 # Run Python service (logs to stdout/stderr)
 CMD ["uv", "run", "-m", "docreader.main"]

@@ -8,8 +8,19 @@ COMMIT_ID="unknown"
 BUILD_TIME="unknown"
 GO_VERSION="unknown"
 
-# 버전 번호 가져오기
-if [ -f "VERSION" ]; then
+# 버전 번호 가져오기: git 태그 → VERSION 파일 → unknown 순으로 시도
+if [ -n "$GITHUB_REF" ] && echo "$GITHUB_REF" | grep -q '^refs/tags/v'; then
+    # GitHub Actions에서 v* 태그 push 시 태그 이름을 사용
+    VERSION="${GITHUB_REF#refs/tags/v}"
+elif command -v git >/dev/null 2>&1; then
+    # 로컬: 현재 커밋의 정확한 태그가 있으면 사용 (v0.2.4 → 0.2.4)
+    GIT_TAG=$(git describe --tags --exact-match 2>/dev/null | sed 's/^v//')
+    if [ -n "$GIT_TAG" ]; then
+        VERSION="$GIT_TAG"
+    elif [ -f "VERSION" ]; then
+        VERSION=$(cat VERSION | tr -d '\n\r')
+    fi
+elif [ -f "VERSION" ]; then
     VERSION=$(cat VERSION | tr -d '\n\r')
 fi
 

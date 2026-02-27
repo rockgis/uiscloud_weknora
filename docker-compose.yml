@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: wechatopenai/weknora-ui:latest
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER:-rockgis}/weknora-ui:latest
     build: ./frontend
     container_name: uiscloud_weknora-frontend
     ports:
@@ -8,12 +8,18 @@ services:
     depends_on:
       app:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     networks:
       - uiscloud_weknora-network
     restart: unless-stopped
 
   app:
-    image: wechatopenai/weknora-app:latest
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER:-rockgis}/weknora-app:latest
     build:
       context: .
       dockerfile: docker/Dockerfile.app
@@ -108,7 +114,7 @@ services:
       - "host.docker.internal:host-gateway"
 
   docreader:
-    image: wechatopenai/weknora-docreader:latest
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER:-rockgis}/weknora-docreader:latest
     build:
       context: .
       dockerfile: docker/Dockerfile.docreader
