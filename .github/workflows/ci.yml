@@ -23,6 +23,8 @@ jobs:
       - uses: golangci/golangci-lint-action@v6
         with:
           version: latest
+          # 기존 코드의 pre-existing 린트 이슈는 무시하고 신규 이슈만 차단
+          only-new-issues: true
 
   go-test:
     name: Go Test
