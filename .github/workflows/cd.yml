@@ -11,6 +11,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
+permissions:
+  packages: write
+  contents: read
+
 jobs:
   build-ui:
     name: Build UI Image
@@ -224,3 +228,40 @@ jobs:
         run: |
           docker buildx imagetools inspect \
             ghcr.io/${{ github.repository_owner }}/weknora-app:${{ steps.meta.outputs.version }}
+
+  release:
+    name: Create GitHub Release
+    needs: [build-ui, build-docreader, merge]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare release artifacts
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          mkdir -p /tmp/release-assets
+
+          # docker-compose.yml: :latest → :<version> 으로 고정 (재현 가능한 배포)
+          sed \
+            -e "/weknora-ui/s|:latest|:${VERSION}|" \
+            -e "/weknora-app/s|:latest|:${VERSION}|" \
+            -e "/weknora-docreader/s|:latest|:${VERSION}|" \
+            docker-compose.yml > /tmp/release-assets/docker-compose.yml
+
+          cp .env.example /tmp/release-assets/.env.example
+
+          # install.sh: __VERSION__ 플레이스홀더를 실제 버전으로 치환
+          sed "s|__VERSION__|${VERSION}|g" scripts/install.sh > /tmp/release-assets/install.sh
+          chmod +x /tmp/release-assets/install.sh
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            /tmp/release-assets/docker-compose.yml
+            /tmp/release-assets/.env.example
+            /tmp/release-assets/install.sh
