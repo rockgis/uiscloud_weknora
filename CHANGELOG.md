@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.4] - 2026-02-27
+
+### ♻️ Refactoring
+- **RENAMED**: Project name `WeKnora` → `uiscloud_weknora` throughout all files
+  - All documentation, source files, and configuration updated
+  - Docker container/network names: `WeKnora-*` → `uiscloud_weknora-*`
+  - Docs files renamed: `docs/WeKnora*.md` → `docs/uiscloud_weknora*.md`
+  - Binary name updated: `BINARY_NAME=uiscloud_weknora` in Makefile
+  - Frontend page title and meta description updated (Chinese text removed)
+  - GitHub URLs updated to `rockgis/uiscloud_weknora`
+  - Go module path (`github.com/Tencent/WeKnora`) preserved pending separate refactor
+
 ## [0.2.3] - 2026-02-26
 
 ### ⚙️ CI/CD
