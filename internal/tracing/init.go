@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	AppName = "WeKnoraApp"
+	AppName = "uiscloud_weknora"
 )
 
 type Tracer struct {

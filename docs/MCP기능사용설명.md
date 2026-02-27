@@ -1,7 +1,7 @@
 ## MCP 기능 사용 설명
 
 ### 기능 개요
-- MCP(Model Context Protocol)를 통해 WeKnora는 외부 도구나 데이터 소스에 안전하게 연결하여 Agent가 추론 시 호출할 수 있는 기능을 확장할 수 있습니다.
+- MCP(Model Context Protocol)를 통해 uiscloud_weknora는 외부 도구나 데이터 소스에 안전하게 연결하여 Agent가 추론 시 호출할 수 있는 기능을 확장할 수 있습니다.
 - 프론트엔드의 `설정 > MCP 서비스`(`frontend/src/views/settings/McpSettings.vue`)에서 모든 서비스를 중앙 집중식으로 관리하며, 수동으로 설정 파일을 수정할 필요가 없습니다.
 - 각 서비스에는 이름, 전송 방식(SSE / HTTP Streamable / Stdio), 연결 주소 또는 명령, 인증 정보, 고급 타임아웃 및 재시도 정책이 포함됩니다.
 

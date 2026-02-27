@@ -1,7 +1,7 @@
 #!/bin/bash
-# WeKnora AI 모델 자동 설정 스크립트
+# uiscloud_weknora AI 모델 자동 설정 스크립트
 #
-# 이 스크립트는 WeKnora에 필요한 AI 모델들을 자동으로 등록합니다.
+# 이 스크립트는 uiscloud_weknora에 필요한 AI 모델들을 자동으로 등록합니다.
 # - Embedding 모델: nomic-embed-text (벡터 검색용)
 # - LLM 모델: llama3.1:8b (기본 대화 모델)
 #
@@ -16,7 +16,7 @@
 
 set -e
 
-echo "=== WeKnora 모델 자동 설정 시작 ==="
+echo "=== uiscloud_weknora 모델 자동 설정 시작 ==="
 echo ""
 
 # 1. 로그인하여 토큰 받기
@@ -93,4 +93,4 @@ for m in models:
 echo ""
 echo "=== 모델 설정 완료! ==="
 echo ""
-echo "이제 http://localhost:5173 에서 WeKnora를 사용할 수 있습니다!"
+echo "이제 http://localhost:5173 에서 uiscloud_weknora를 사용할 수 있습니다!"

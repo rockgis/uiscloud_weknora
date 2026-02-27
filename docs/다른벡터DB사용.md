@@ -1,6 +1,6 @@
 ### 새로운 벡터 데이터베이스 통합 방법
 
-이 문서는 WeKnora 프로젝트에 새로운 벡터 데이터베이스 지원을 추가하기 위한 완전한 가이드를 제공합니다. 표준화된 인터페이스 구현과 구조화된 프로세스를 따르면 개발자는 사용자 정의 벡터 데이터베이스를 효율적으로 통합할 수 있습니다.
+이 문서는 uiscloud_weknora 프로젝트에 새로운 벡터 데이터베이스 지원을 추가하기 위한 완전한 가이드를 제공합니다. 표준화된 인터페이스 구현과 구조화된 프로세스를 따르면 개발자는 사용자 정의 벡터 데이터베이스를 효율적으로 통합할 수 있습니다.
 
 ### 통합 프로세스
 
@@ -184,4 +184,4 @@ const (
 - ElasticsearchV7: `internal/application/repository/retriever/elasticsearch/v7/`
 - ElasticsearchV8: `internal/application/repository/retriever/elasticsearch/v8/`
 
-위 단계를 따르고 기존 구현을 참조하면 새로운 벡터 데이터베이스를 WeKnora 시스템에 성공적으로 통합하여 벡터 검색 기능을 확장할 수 있습니다.
+위 단계를 따르고 기존 구현을 참조하면 새로운 벡터 데이터베이스를 uiscloud_weknora 시스템에 성공적으로 통합하여 벡터 검색 기능을 확장할 수 있습니다.

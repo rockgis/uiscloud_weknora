@@ -1,5 +1,5 @@
 #!/bin/bash
-# WeKnora AI 대화 기능 테스트 스크립트
+# uiscloud_weknora AI 대화 기능 테스트 스크립트
 #
 # 이 스크립트는 AI 대화 관련 기능들을 테스트합니다.
 # - 대화 세션 생성

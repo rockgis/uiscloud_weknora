@@ -1,4 +1,4 @@
-# WeKnora 지식 그래프
+# uiscloud_weknora 지식 그래프
 
 ## 빠른 시작
 

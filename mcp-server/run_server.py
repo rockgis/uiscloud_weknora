@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-WeKnora MCP Server 시작 스크립트
+uiscloud_weknora MCP Server 시작 스크립트
 """
 
 import asyncio
@@ -21,13 +21,13 @@ def check_environment():
     if not api_key:
         print("경고: WEKNORA_API_KEY 환경 변수가 설정되지 않았습니다")
 
-    print(f"WeKnora Base URL: {base_url or 'http://localhost:8080/api/v1'}")
+    print(f"uiscloud_weknora Base URL: {base_url or 'http://localhost:8080/api/v1'}")
     print(f"API Key: {'설정됨' if api_key else '설정되지 않음'}")
 
 
 def main():
     """메인 함수"""
-    print("WeKnora MCP Server 시작 중...")
+    print("uiscloud_weknora MCP Server 시작 중...")
     check_environment()
 
     try:

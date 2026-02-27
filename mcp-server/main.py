@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-WeKnora MCP Server 메인 진입점
+uiscloud_weknora MCP Server 메인 진입점
 
-이 파일은 WeKnora MCP 서버를 시작하기 위한 통합 진입점을 제공합니다.
+이 파일은 uiscloud_weknora MCP 서버를 시작하기 위한 통합 진입점을 제공합니다.
 다음과 같은 방법으로 실행할 수 있습니다:
 1. python main.py
 2. python -m weknora_mcp_server
@@ -42,7 +42,7 @@ def check_environment_variables():
     base_url = os.getenv("WEKNORA_BASE_URL")
     api_key = os.getenv("WEKNORA_API_KEY")
 
-    print("=== WeKnora MCP Server 환경 확인 ===")
+    print("=== uiscloud_weknora MCP Server 환경 확인 ===")
     print(f"Base URL: {base_url or 'http://localhost:8080/api/v1 (기본값)'}")
     print(f"API Key: {'설정됨' if api_key else '설정되지 않음 (경고)'}")
 
@@ -59,7 +59,7 @@ def check_environment_variables():
 def parse_arguments():
     """명령줄 인자 파싱"""
     parser = argparse.ArgumentParser(
-        description="WeKnora MCP Server - WeKnora API용 Model Context Protocol 서버",
+        description="uiscloud_weknora MCP Server - uiscloud_weknora API용 Model Context Protocol 서버",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 예시:
@@ -68,8 +68,8 @@ def parse_arguments():
   python main.py --verbose          # 상세 로그 활성화
 
 환경 변수:
-  WEKNORA_BASE_URL    WeKnora API 기본 URL (기본값: http://localhost:8080/api/v1)
-  WEKNORA_API_KEY     WeKnora API 키
+  WEKNORA_BASE_URL    uiscloud_weknora API 기본 URL (기본값: http://localhost:8080/api/v1)
+  WEKNORA_API_KEY     uiscloud_weknora API 키
         """,
     )
 
@@ -80,7 +80,7 @@ def parse_arguments():
     parser.add_argument("--verbose", "-v", action="store_true", help="상세 로그 출력 활성화")
 
     parser.add_argument(
-        "--version", action="version", version="WeKnora MCP Server 1.0.0"
+        "--version", action="version", version="uiscloud_weknora MCP Server 1.0.0"
     )
 
     return parser.parse_args()
@@ -113,7 +113,7 @@ async def main():
         print("상세 로그 모드 활성화됨")
 
     try:
-        print("WeKnora MCP Server 시작 중...")
+        print("uiscloud_weknora MCP Server 시작 중...")
 
         # 서버 가져오기 및 실행
         from weknora_mcp_server import run

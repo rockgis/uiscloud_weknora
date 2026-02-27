@@ -1,8 +1,8 @@
-# WeKnora 최종 운영 가이드
+# uiscloud_weknora 최종 운영 가이드
 
 **버전**: 2.0 (최종판)
 **작성일**: 2025-12-21
-**프로젝트**: WeKnora - LLM 기반 RAG 프레임워크
+**프로젝트**: uiscloud_weknora - LLM 기반 RAG 프레임워크
 **환경**: macOS 로컬 개발 환경
 
 ---
@@ -24,9 +24,9 @@
 
 ## 1. 프로젝트 개요
 
-### 1.1 WeKnora란?
+### 1.1 uiscloud_weknora란?
 
-WeKnora는 **문서 이해 및 시맨틱 검색**을 위한 LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크입니다.
+uiscloud_weknora는 **문서 이해 및 시맨틱 검색**을 위한 LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크입니다.
 
 #### 주요 특징
 - 🤖 **Agent 모드**: ReACT Agent를 통한 도구 사용 및 반복적 추론
@@ -159,8 +159,8 @@ kill -15 $(lsof -ti:8080)
 make dev-stop
 
 # 4. 남은 컨테이너 정리
-docker stop $(docker ps -q --filter "name=WeKnora")
-docker rm $(docker ps -aq --filter "name=WeKnora")
+docker stop $(docker ps -q --filter "name=uiscloud_weknora")
+docker rm $(docker ps -aq --filter "name=uiscloud_weknora")
 
 # 5. 인프라 재시작
 make dev-start
@@ -179,7 +179,7 @@ sleep 15 && ./scripts/tests/check_status.sh
 
 ```
 ==========================================
-  WeKnora 시스템 상태 확인
+  uiscloud_weknora 시스템 상태 확인
 ==========================================
 
 ✓ 백엔드 정상 (포트 8080)
@@ -187,13 +187,13 @@ sleep 15 && ./scripts/tests/check_status.sh
 ✓ Ollama 정상 (포트 11434)
 
 Docker 인프라 서비스:
-✓ WeKnora-postgres-dev: Up (healthy)
-✓ WeKnora-redis-dev: Up
-✓ WeKnora-qdrant-dev: Up
-✓ WeKnora-neo4j-dev: Up
-✓ WeKnora-jaeger-dev: Up
-✓ WeKnora-docreader-dev: Up (healthy)
-✓ WeKnora-minio-dev: Up (healthy)
+✓ uiscloud_weknora-postgres-dev: Up (healthy)
+✓ uiscloud_weknora-redis-dev: Up
+✓ uiscloud_weknora-qdrant-dev: Up
+✓ uiscloud_weknora-neo4j-dev: Up
+✓ uiscloud_weknora-jaeger-dev: Up
+✓ uiscloud_weknora-docreader-dev: Up (healthy)
+✓ uiscloud_weknora-minio-dev: Up (healthy)
 ```
 
 ---
@@ -361,7 +361,7 @@ kill -15 $(lsof -ti:8080)
 make dev-stop
 
 # 4. 종료 확인
-docker ps --filter "name=WeKnora"
+docker ps --filter "name=uiscloud_weknora"
 # (아무것도 출력되지 않으면 성공)
 ```
 
@@ -373,8 +373,8 @@ kill -9 $(lsof -ti:8080)
 kill -9 $(lsof -ti:5173)
 
 # 모든 Docker 컨테이너 강제 종료 및 삭제
-docker stop $(docker ps -q --filter "name=WeKnora")
-docker rm $(docker ps -aq --filter "name=WeKnora")
+docker stop $(docker ps -q --filter "name=uiscloud_weknora")
+docker rm $(docker ps -aq --filter "name=uiscloud_weknora")
 
 # 네트워크 정리 (필요시)
 docker network prune -f
@@ -411,7 +411,7 @@ kill -15 $(lsof -ti:11434)
 # ⚠️ 경고: 모든 데이터가 삭제됩니다!
 
 # Docker 볼륨 삭제
-docker volume rm $(docker volume ls -q | grep WeKnora)
+docker volume rm $(docker volume ls -q | grep uiscloud_weknora)
 
 # 데이터베이스 파일 삭제 (로컬 설정 시)
 # rm -rf ./data/*
@@ -440,21 +440,21 @@ docker volume rm $(docker volume ls -q | grep WeKnora)
 
 ```bash
 #!/bin/bash
-# WeKnora 시스템 상태 확인 스크립트
+# uiscloud_weknora 시스템 상태 확인 스크립트
 
 echo "=========================================="
-echo "  WeKnora 시스템 상태 확인"
+echo "  uiscloud_weknora 시스템 상태 확인"
 echo "=========================================="
 echo ""
 
 # 서버 상태
 curl -s http://localhost:8080/health | grep -q ok && echo "✓ 백엔드 정상 (포트 8080)" || echo "✗ 백엔드 오류"
-curl -s http://localhost:5173 | grep -q WeKnora && echo "✓ 프론트엔드 정상 (포트 5173)" || echo "✗ 프론트엔드 오류"
+curl -s http://localhost:5173 | grep -q uiscloud_weknora && echo "✓ 프론트엔드 정상 (포트 5173)" || echo "✗ 프론트엔드 오류"
 curl -s http://localhost:11434/api/version | grep -q version && echo "✓ Ollama 정상 (포트 11434)" || echo "✗ Ollama 오류"
 
 echo ""
 echo "Docker 인프라 서비스:"
-docker ps --format "✓ {{.Names}}: {{.Status}}" | grep WeKnora
+docker ps --format "✓ {{.Names}}: {{.Status}}" | grep uiscloud_weknora
 
 echo ""
 echo "=========================================="
@@ -557,7 +557,7 @@ cat .env | grep DB_
 # DB_NAME=weknora
 
 # PostgreSQL 컨테이너 확인
-docker logs WeKnora-postgres-dev
+docker logs uiscloud_weknora-postgres-dev
 ```
 
 ### 9.4 Ollama 연결 실패
@@ -696,7 +696,7 @@ API 요청 시 `config` 필드 포함:
 ### 10.3 프로젝트 구조
 
 ```
-WeKnora/
+uiscloud_weknora/
 ├── cmd/server/              # 애플리케이션 진입점
 ├── internal/                # 내부 패키지
 │   ├── agent/              # ReACT Agent 구현
@@ -829,7 +829,7 @@ make dev-stop                     # 인프라 종료
 
 **문서 끝**
 
-이 가이드는 WeKnora 시스템의 전체 라이프사이클을 다룹니다:
+이 가이드는 uiscloud_weknora 시스템의 전체 라이프사이클을 다룹니다:
 - ✅ 설치 및 초기 설정
 - ✅ 시스템 재시작
 - ✅ 전체 테스트 실행

@@ -308,7 +308,7 @@ All notable changes to this project will be documented in this file.
 - Improved initialization configuration handling
 
 ### 🛡️ Security Recommendations
-- Deploy WeKnora services in internal/private network environments
+- Deploy uiscloud_weknora services in internal/private network environments
 - Avoid direct exposure to public internet
 - Configure proper firewall rules and access controls
 - Regular updates for security patches and improvements
@@ -326,7 +326,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.0] - 2025-09-08
 
-- Initial public release of WeKnora.
+- Initial public release of uiscloud_weknora.
 - Web UI for knowledge upload, chat, configuration, and settings.
 - RAG pipeline with chunking, embedding, retrieval, reranking, and generation.
 - Initialization wizard for configuring models (LLM, embedding, rerank, retriever).
@@ -336,11 +336,11 @@ All notable changes to this project will be documented in this file.
 - Docker Compose for quick startup and service orchestration.
 - MCP server support for integrating with MCP-compatible clients.
 
-[0.2.3]: https://github.com/Tencent/WeKnora/compare/v0.2.2...v0.2.3
-[0.2.2]: https://github.com/Tencent/WeKnora/tree/v0.2.2
-[0.2.1]: https://github.com/Tencent/WeKnora/tree/v0.2.1
-[0.2.0]: https://github.com/Tencent/WeKnora/tree/v0.2.0
-[0.1.4]: https://github.com/Tencent/WeKnora/tree/v0.1.4
-[0.1.3]: https://github.com/Tencent/WeKnora/tree/v0.1.3
-[0.1.2]: https://github.com/Tencent/WeKnora/tree/v0.1.2
-[0.1.0]: https://github.com/Tencent/WeKnora/tree/v0.1.0
+[0.2.3]: https://github.com/rockgis/uiscloud_weknora/compare/v0.2.2...v0.2.3
+[0.2.2]: https://github.com/rockgis/uiscloud_weknora/tree/v0.2.2
+[0.2.1]: https://github.com/rockgis/uiscloud_weknora/tree/v0.2.1
+[0.2.0]: https://github.com/rockgis/uiscloud_weknora/tree/v0.2.0
+[0.1.4]: https://github.com/rockgis/uiscloud_weknora/tree/v0.1.4
+[0.1.3]: https://github.com/rockgis/uiscloud_weknora/tree/v0.1.3
+[0.1.2]: https://github.com/rockgis/uiscloud_weknora/tree/v0.1.2
+[0.1.0]: https://github.com/rockgis/uiscloud_weknora/tree/v0.1.0

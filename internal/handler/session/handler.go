@@ -9,7 +9,7 @@ import (
 	"github.com/Tencent/WeKnora/internal/logger"
 	"github.com/Tencent/WeKnora/internal/types"
 	"github.com/Tencent/WeKnora/internal/types/interfaces"
-	secutils "github.com/Tencent/WeKnora/internal/utils"
+	secutils "github.com/Tencent/uiscloud_weknora/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 

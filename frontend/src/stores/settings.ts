@@ -84,7 +84,7 @@ const defaultSettings: Settings = {
 
 export const useSettingsStore = defineStore("settings", {
   state: () => ({
-    settings: JSON.parse(localStorage.getItem("WeKnora_settings") || JSON.stringify(defaultSettings)),
+    settings: JSON.parse(localStorage.getItem("uiscloud_weknora_settings") || JSON.stringify(defaultSettings)),
   }),
 
   getters: {
@@ -112,7 +112,7 @@ export const useSettingsStore = defineStore("settings", {
   actions: {
     saveSettings(settings: Settings) {
       this.settings = { ...settings };
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
 
     getSettings(): Settings {
@@ -133,23 +133,23 @@ export const useSettingsStore = defineStore("settings", {
     
     toggleAgent(enabled: boolean) {
       this.settings.isAgentEnabled = enabled;
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     updateAgentConfig(config: Partial<AgentConfig>) {
       this.settings.agentConfig = { ...this.settings.agentConfig, ...config };
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
 
     updateConversationModels(models: Partial<ConversationModels>) {
       const current = this.settings.conversationModels || defaultSettings.conversationModels;
       this.settings.conversationModels = { ...current, ...models };
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     updateModelConfig(config: Partial<ModelConfig>) {
       this.settings.modelConfig = { ...this.settings.modelConfig, ...config };
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     addModel(type: 'chat' | 'embedding' | 'rerank' | 'vllm', model: ModelItem) {
@@ -163,7 +163,7 @@ export const useSettingsStore = defineStore("settings", {
       }
       models.push(model);
       this.settings.modelConfig[key] = models as any;
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     updateModel(type: 'chat' | 'embedding' | 'rerank' | 'vllm', modelId: string, updates: Partial<ModelItem>) {
@@ -176,7 +176,7 @@ export const useSettingsStore = defineStore("settings", {
         }
         models[index] = { ...models[index], ...updates };
         this.settings.modelConfig[key] = models as any;
-        localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+        localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
       }
     },
     
@@ -189,7 +189,7 @@ export const useSettingsStore = defineStore("settings", {
         models[0].isDefault = true;
       }
       this.settings.modelConfig[key] = models as any;
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     setDefaultModel(type: 'chat' | 'embedding' | 'rerank' | 'vllm', modelId: string) {
@@ -197,35 +197,35 @@ export const useSettingsStore = defineStore("settings", {
       const models = [...this.settings.modelConfig[key]] as ModelItem[];
       models.forEach(m => m.isDefault = (m.id === modelId));
       this.settings.modelConfig[key] = models as any;
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     updateOllamaConfig(config: Partial<OllamaConfig>) {
       this.settings.ollamaConfig = { ...this.settings.ollamaConfig, ...config };
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     selectKnowledgeBases(kbIds: string[]) {
       this.settings.selectedKnowledgeBases = kbIds;
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     addKnowledgeBase(kbId: string) {
       if (!this.settings.selectedKnowledgeBases.includes(kbId)) {
         this.settings.selectedKnowledgeBases.push(kbId);
-        localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+        localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
       }
     },
     
     removeKnowledgeBase(kbId: string) {
       this.settings.selectedKnowledgeBases = 
         this.settings.selectedKnowledgeBases.filter((id: string) => id !== kbId);
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     clearKnowledgeBases() {
       this.settings.selectedKnowledgeBases = [];
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
     
     getSelectedKnowledgeBases(): string[] {
@@ -234,7 +234,7 @@ export const useSettingsStore = defineStore("settings", {
     
     toggleWebSearch(enabled: boolean) {
       this.settings.webSearchEnabled = enabled;
-      localStorage.setItem("WeKnora_settings", JSON.stringify(this.settings));
+      localStorage.setItem("uiscloud_weknora_settings", JSON.stringify(this.settings));
     },
   },
 }); 

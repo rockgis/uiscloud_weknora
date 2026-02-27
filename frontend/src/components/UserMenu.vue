@@ -154,7 +154,7 @@ const handleSettings = () => {
 
 const openApiDoc = () => {
   menuVisible.value = false
-  window.open('https://github.com/Tencent/WeKnora/blob/main/docs/API.md', '_blank')
+  window.open('https://github.com/rockgis/uiscloud_weknora/blob/main/docs/API.md', '_blank')
 }
 
 const openWebsite = () => {
@@ -164,7 +164,7 @@ const openWebsite = () => {
 
 const openGithub = () => {
   menuVisible.value = false
-  window.open('https://github.com/Tencent/WeKnora', '_blank')
+  window.open('https://github.com/rockgis/uiscloud_weknora', '_blank')
 }
 
 const handleLogout = async () => {

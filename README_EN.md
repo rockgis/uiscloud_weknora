@@ -1,24 +1,24 @@
 <p align="center">
   <picture>
-    <img src="./docs/images/logo.png" alt="WeKnora Logo" height="120"/>
+    <img src="./docs/images/logo.png" alt="uiscloud_weknora Logo" height="120"/>
   </picture>
 </p>
 
 <p align="center">
   <picture>
     <a href="https://trendshift.io/repositories/15289" target="_blank">
-      <img src="https://trendshift.io/api/badge/repositories/15289" alt="Tencent%2FWeKnora | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/>
+      <img src="https://trendshift.io/api/badge/repositories/15289" alt="Tencent%2Fuiscloud_weknora | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/>
     </a>
   </picture>
 </p>
 <p align="center">
     <a href="https://weknora.weixin.qq.com" target="_blank">
-        <img alt="Official Website" src="https://img.shields.io/badge/Official_Website-WeKnora-4e6b99">
+        <img alt="Official Website" src="https://img.shields.io/badge/Official_Website-uiscloud_weknora-4e6b99">
     </a>
     <a href="https://chatbot.weixin.qq.com" target="_blank">
         <img alt="WeChat Open Platform" src="https://img.shields.io/badge/WeChat_Open_Platform-5ac725">
     </a>
-    <a href="https://github.com/Tencent/WeKnora/blob/main/LICENSE">
+    <a href="https://github.com/rockgis/uiscloud_weknora/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/License-MIT-ffffff?labelColor=d4eaf7&color=2e6cc4" alt="License">
     </a>
     <a href="./CHANGELOG.md">
@@ -41,13 +41,13 @@
   </h4>
 </p>
 
-# 💡 WeKnora - LLM-Powered Document Understanding & Retrieval Framework
+# 💡 uiscloud_weknora - LLM-Powered Document Understanding & Retrieval Framework
 
 ## 📌 Overview
 
-[**WeKnora**](https://weknora.weixin.qq.com) is an LLM-powered framework designed for deep document understanding and semantic retrieval, especially for handling complex, heterogeneous documents. 
+[**uiscloud_weknora**](https://weknora.weixin.qq.com) is an LLM-powered framework designed for deep document understanding and semantic retrieval, especially for handling complex, heterogeneous documents. 
 
-It adopts a modular architecture that combines multimodal preprocessing, semantic vector indexing, intelligent retrieval, and large language model inference. At its core, WeKnora follows the **RAG (Retrieval-Augmented Generation)** paradigm, enabling high-quality, context-aware answers by combining relevant document chunks with model reasoning.
+It adopts a modular architecture that combines multimodal preprocessing, semantic vector indexing, intelligent retrieval, and large language model inference. At its core, uiscloud_weknora follows the **RAG (Retrieval-Augmented Generation)** paradigm, enabling high-quality, context-aware answers by combining relevant document chunks with model reasoning.
 
 **Website:** https://weknora.weixin.qq.com
 
@@ -65,9 +65,9 @@ It adopts a modular architecture that combines multimodal preprocessing, semanti
 
 ## 🔒 Security Notice
 
-**Important:** Starting from v0.1.3, WeKnora includes login authentication functionality to enhance system security. For production deployments, we strongly recommend:
+**Important:** Starting from v0.1.3, uiscloud_weknora includes login authentication functionality to enhance system security. For production deployments, we strongly recommend:
 
-- Deploy WeKnora services in internal/private network environments rather than public internet
+- Deploy uiscloud_weknora services in internal/private network environments rather than public internet
 - Avoid exposing the service directly to public networks to prevent potential information leakage
 - Configure proper firewall rules and access controls for your deployment environment
 - Regularly update to the latest version for security patches and improvements
@@ -76,7 +76,7 @@ It adopts a modular architecture that combines multimodal preprocessing, semanti
 
 ![weknora-architecture.png](./docs/images/architecture.png)
 
-WeKnora employs a modern modular design to build a complete document understanding and retrieval pipeline. The system primarily includes document parsing, vector processing, retrieval engine, and large model inference as core modules, with each component being flexibly configurable and extendable.
+uiscloud_weknora employs a modern modular design to build a complete document understanding and retrieval pipeline. The system primarily includes document parsing, vector processing, retrieval engine, and large model inference as core modules, with each component being flexibly configurable and extendable.
 
 ## 🎯 Key Features
 
@@ -139,8 +139,8 @@ Make sure the following tools are installed on your system:
 
 ```bash
 # Clone the main repository
-git clone https://github.com/Tencent/WeKnora.git
-cd WeKnora
+git clone https://github.com/rockgis/uiscloud_weknora.git
+cd uiscloud_weknora
 ```
 
 #### ② Configure environment variables
@@ -223,17 +223,17 @@ Once started, services will be available at:
 
 ### 🔌 Using WeChat Dialog Open Platform
 
-WeKnora serves as the core technology framework for the [WeChat Dialog Open Platform](https://chatbot.weixin.qq.com), providing a more convenient usage approach:
+uiscloud_weknora serves as the core technology framework for the [WeChat Dialog Open Platform](https://chatbot.weixin.qq.com), providing a more convenient usage approach:
 
 - **Zero-code Deployment**: Simply upload knowledge to quickly deploy intelligent Q&A services within the WeChat ecosystem, achieving an "ask and answer" experience
 - **Efficient Question Management**: Support for categorized management of high-frequency questions, with rich data tools to ensure accurate, reliable, and easily maintainable answers
-- **WeChat Ecosystem Integration**: Through the WeChat Dialog Open Platform, WeKnora's intelligent Q&A capabilities can be seamlessly integrated into WeChat Official Accounts, Mini Programs, and other WeChat scenarios, enhancing user interaction experiences
+- **WeChat Ecosystem Integration**: Through the WeChat Dialog Open Platform, uiscloud_weknora's intelligent Q&A capabilities can be seamlessly integrated into WeChat Official Accounts, Mini Programs, and other WeChat scenarios, enhancing user interaction experiences
 
-### 🔗 Access WeKnora via MCP Server
+### 🔗 Access uiscloud_weknora via MCP Server
 
 #### 1️⃣ Clone the repository
 ```
-git clone https://github.com/Tencent/WeKnora
+git clone https://github.com/rockgis/uiscloud_weknora
 ```
 
 #### 2️⃣ Configure MCP Server
@@ -245,11 +245,11 @@ Configure the MCP client to connect to the server:
   "mcpServers": {
     "weknora": {
       "args": [
-        "path/to/WeKnora/mcp-server/run_server.py"
+        "path/to/uiscloud_weknora/mcp-server/run_server.py"
       ],
       "command": "python",
       "env":{
-        "WEKNORA_API_KEY":"Enter your WeKnora instance, open developer tools, check the request header x-api-key starting with sk",
+        "WEKNORA_API_KEY":"Enter your uiscloud_weknora instance, open developer tools, check the request header x-api-key starting with sk",
         "WEKNORA_BASE_URL":"http(s)://your-weknora-address/api/v1"
       }
     }
@@ -314,7 +314,7 @@ On your first visit, you will be automatically redirected to the registration/lo
 
 ### Document Knowledge Graph
 
-WeKnora supports transforming documents into knowledge graphs, displaying the relationships between different sections of the documents. Once the knowledge graph feature is enabled, the system analyzes and constructs an internal semantic association network that not only helps users understand document content but also provides structured support for indexing and retrieval, enhancing the relevance and breadth of search results.
+uiscloud_weknora supports transforming documents into knowledge graphs, displaying the relationships between different sections of the documents. Once the knowledge graph feature is enabled, the system analyzes and constructs an internal semantic association network that not only helps users understand document content but also provides structured support for indexing and retrieval, enhancing the relevance and breadth of search results.
 
 For detailed configuration, please refer to the [Knowledge Graph Configuration Guide](./docs/KnowledgeGraph.md).
 
@@ -360,7 +360,7 @@ make dev-frontend   # Start frontend (new terminal)
 ### 📁 Directory Structure
 
 ```
-WeKnora/
+uiscloud_weknora/
 ├── client/      # go client
 ├── cmd/         # Main entry point
 ├── config/      # Configuration files
@@ -376,7 +376,7 @@ WeKnora/
 
 ## 🤝 Contributing
 
-We welcome community contributions! For suggestions, bugs, or feature requests, please submit an [Issue](https://github.com/Tencent/WeKnora/issues) or directly create a Pull Request.
+We welcome community contributions! For suggestions, bugs, or feature requests, please submit an [Issue](https://github.com/rockgis/uiscloud_weknora/issues) or directly create a Pull Request.
 
 ### 🎯 How to Contribute
 
@@ -417,7 +417,7 @@ refactor: Restructure document parsing module
 
 Thanks to these excellent contributors:
 
-[![Contributors](https://contrib.rocks/image?repo=Tencent/WeKnora)](https://github.com/Tencent/WeKnora/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=rockgis/uiscloud_weknora)](https://github.com/rockgis/uiscloud_weknora/graphs/contributors)
 
 ## 📄 License
 
@@ -426,10 +426,10 @@ You are free to use, modify, and distribute the code with proper attribution.
 
 ## 📈 Project Statistics
 
-<a href="https://www.star-history.com/#Tencent/WeKnora&type=date&legend=top-left">
+<a href="https://www.star-history.com/#rockgis/uiscloud_weknora&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Tencent/WeKnora&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Tencent/WeKnora&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Tencent/WeKnora&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=rockgis/uiscloud_weknora&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=rockgis/uiscloud_weknora&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=rockgis/uiscloud_weknora&type=date&legend=top-left" />
  </picture>
 </a>

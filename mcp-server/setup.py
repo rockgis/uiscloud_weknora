@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-WeKnora MCP Server 설치 스크립트
+uiscloud_weknora MCP Server 설치 스크립트
 """
 
 from setuptools import setup
@@ -12,7 +12,7 @@ def read_readme():
         with open("README.md", "r", encoding="utf-8") as f:
             return f.read()
     except FileNotFoundError:
-        return "WeKnora MCP Server - WeKnora API용 Model Context Protocol 서버"
+        return "uiscloud_weknora MCP Server - uiscloud_weknora API용 Model Context Protocol 서버"
 
 
 # 의존성 읽기
@@ -29,12 +29,12 @@ def read_requirements():
 setup(
     name="weknora-mcp-server",
     version="1.0.0",
-    author="WeKnora Team",
+    author="uiscloud_weknora Team",
     author_email="support@weknora.com",
-    description="WeKnora MCP Server - WeKnora API용 Model Context Protocol 서버",
+    description="uiscloud_weknora MCP Server - uiscloud_weknora API용 Model Context Protocol 서버",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    url="https://github.com/NannaOlympicBroadcast/WeKnoraMCP",
+    url="https://github.com/rockgis/uiscloud_weknora",
     py_modules=["weknora_mcp_server", "main", "run_server", "run", "test_module"],
     classifiers=[
         "Development Status :: 4 - Beta",

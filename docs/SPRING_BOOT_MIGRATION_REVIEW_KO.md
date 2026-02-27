@@ -1,10 +1,10 @@
-# WeKnora 메인 백엔드 Spring Boot 3.5.x 마이그레이션 검토
+# uiscloud_weknora 메인 백엔드 Spring Boot 3.5.x 마이그레이션 검토
 
 ## 1. 개요
 
 ### 1.1 검토 목적
 
-현재 Go 1.24+ 기반의 WeKnora 메인 백엔드를 Spring Boot 3.5.x로 마이그레이션하는 것의 기술적 타당성을 분석합니다.
+현재 Go 1.24+ 기반의 uiscloud_weknora 메인 백엔드를 Spring Boot 3.5.x로 마이그레이션하는 것의 기술적 타당성을 분석합니다.
 
 ### 1.2 결론 요약
 
@@ -603,5 +603,5 @@ public Flux<ServerSentEvent<Event>> stream(@PathVariable String sessionId) {
 
 ---
 
-*이 문서는 WeKnora v0.2.x 코드베이스 분석을 기반으로 작성되었습니다.*
+*이 문서는 uiscloud_weknora v0.2.x 코드베이스 분석을 기반으로 작성되었습니다.*
 *Spring Boot 3.5.x는 2024년 12월 기준 최신 버전입니다.*

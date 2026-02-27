@@ -1,4 +1,4 @@
-// Package client provides the implementation for interacting with the WeKnora API
+// Package client provides the implementation for interacting with the uiscloud_weknora API
 // The Message related interfaces are used to manage messages in a session
 // Messages can be created, retrieved, deleted, and queried
 package client

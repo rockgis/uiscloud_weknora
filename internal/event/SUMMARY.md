@@ -1,8 +1,8 @@
-# WeKnora 이벤트 시스템 요약
+# uiscloud_weknora 이벤트 시스템 요약
 
 ## 개요
 
-WeKnora 프로젝트에 완전한 이벤트 발송 및 리스닝 메커니즘을 성공적으로 구현하였으며, 사용자 쿼리 처리 파이프라인의 각 단계에 대한 이벤트 처리를 지원합니다.
+uiscloud_weknora 프로젝트에 완전한 이벤트 발송 및 리스닝 메커니즘을 성공적으로 구현하였으며, 사용자 쿼리 처리 파이프라인의 각 단계에 대한 이벤트 처리를 지원합니다.
 
 ## 핵심 기능
 
@@ -123,7 +123,7 @@ bus.On(event.EventError, func(ctx context.Context, e event.Event) error {
 애플리케이션 시작 시 (`main.go` 또는 `container.go`):
 
 ```go
-import "github.com/Tencent/WeKnora/internal/event"
+import "github.com/rockgis/uiscloud_weknora/internal/event"
 
 func Initialize() {
     // 전역 이벤트 버스 가져오기
@@ -234,4 +234,4 @@ Step 5: Chat Completion
 
 ## 총평
 
-이벤트 시스템이 완전히 구현되고 테스트 검증이 완료되어 즉시 WeKnora 프로젝트에 통합할 수 있습니다. 쿼리 처리 파이프라인의 각 단계에 대한 모니터링, 로그 기록, 분석 및 디버깅에 활용할 수 있습니다. 시스템 설계가 간결하고 성능이 뛰어나며 사용 및 확장이 용이합니다.
+이벤트 시스템이 완전히 구현되고 테스트 검증이 완료되어 즉시 uiscloud_weknora 프로젝트에 통합할 수 있습니다. 쿼리 처리 파이프라인의 각 단계에 대한 모니터링, 로그 기록, 분석 및 디버깅에 활용할 수 있습니다. 시스템 설계가 간결하고 성능이 뛰어나며 사용 및 확장이 용이합니다.

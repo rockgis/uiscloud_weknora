@@ -1,6 +1,6 @@
-# WeKnora MCP Server 사용 예시
+# uiscloud_weknora MCP Server 사용 예시
 
-이 문서는 WeKnora MCP Server의 상세한 사용 예시를 제공합니다.
+이 문서는 uiscloud_weknora MCP Server의 상세한 사용 예시를 제공합니다.
 
 ## 기본 사용법
 
@@ -397,7 +397,7 @@ Claude Desktop 설정 파일에 추가:
 }
 ```
 
-프로젝트 저장소: https://github.com/NannaOlympicBroadcast/WeKnoraMCP
+프로젝트 저장소: https://github.com/rockgis/uiscloud_weknora
 
 ### 다른 MCP 클라이언트와 통합
 각 클라이언트의 문서를 참고하여 서버 시작 명령 및 환경 변수를 설정하세요.
@@ -407,5 +407,5 @@ Claude Desktop 설정 파일에 추가:
 문제가 발생하면:
 1. `python main.py --check-only`를 실행하여 환경 확인
 2. `python main.py --verbose`를 사용하여 상세 로그 확인
-3. WeKnora 서비스가 정상적으로 실행 중인지 확인
+3. uiscloud_weknora 서비스가 정상적으로 실행 중인지 확인
 4. 네트워크 연결 및 방화벽 설정 확인

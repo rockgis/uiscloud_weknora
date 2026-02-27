@@ -7,13 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/Tencent/WeKnora/internal/agent"
-	agenttools "github.com/Tencent/WeKnora/internal/agent/tools"
+	agenttools "github.com/Tencent/uiscloud_weknora/internal/agent/tools"
 	"github.com/Tencent/WeKnora/internal/config"
 	"github.com/Tencent/WeKnora/internal/errors"
 	"github.com/Tencent/WeKnora/internal/logger"
 	"github.com/Tencent/WeKnora/internal/types"
 	"github.com/Tencent/WeKnora/internal/types/interfaces"
-	secutils "github.com/Tencent/WeKnora/internal/utils"
+	secutils "github.com/Tencent/uiscloud_weknora/internal/utils"
 )
 
 // TenantHandler implements HTTP request handlers for tenant management

@@ -58,7 +58,7 @@ const handleThemeChange = () => {
     language: localLanguage.value,
     theme: localTheme.value
   }
-  localStorage.setItem('WeKnora_general_settings', JSON.stringify(settings))
+  localStorage.setItem('uiscloud_weknora_general_settings', JSON.stringify(settings))
   MessagePlugin.success(t('common.success'))
 }
 </script>

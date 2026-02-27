@@ -434,7 +434,7 @@ export default {
   },
   initialization: {
     title: "초기화",
-    welcome: "WeKnora에 오신 것을 환영합니다",
+    welcome: "uiscloud_weknora에 오신 것을 환영합니다",
     description: "사용을 시작하려면 먼저 시스템을 설정하세요",
     step1: "1단계: LLM 모델 설정",
     step2: "2단계: 임베딩 모델 설정",

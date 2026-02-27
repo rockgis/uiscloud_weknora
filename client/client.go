@@ -1,4 +1,4 @@
-// Package client provides the implementation for interacting with the WeKnora API
+// Package client provides the implementation for interacting with the uiscloud_weknora API
 // This package encapsulates CRUD operations for server resources and provides a friendly interface for callers
 package client
 
@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-// Client is the client for interacting with the WeKnora service
+// Client is the client for interacting with the uiscloud_weknora service
 type Client struct {
 	baseURL    string
 	httpClient *http.Client

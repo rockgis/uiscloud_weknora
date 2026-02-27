@@ -81,7 +81,7 @@ COPY --from=builder /app/config ./config
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/migrations ./migrations
 COPY --from=builder /app/dataset/samples ./dataset/samples
-COPY --from=builder /app/WeKnora .
+COPY --from=builder /app/uiscloud_weknora .
 
 # Make scripts executable
 RUN chmod +x ./scripts/*.sh
@@ -92,4 +92,4 @@ EXPOSE 8080
 # Switch to non-root user and run the application directly
 USER appuser
 
-CMD ["./WeKnora"]
+CMD ["./uiscloud_weknora"]

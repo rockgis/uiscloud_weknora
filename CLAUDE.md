@@ -4,7 +4,7 @@
 
 ## 프로젝트 개요
 
-WeKnora는 문서 이해 및 시맨틱 검색을 위한 LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크입니다. 멀티모달 문서 전처리, 시맨틱 벡터 인덱싱, 하이브리드 검색, LLM 추론을 결합합니다.
+uiscloud_weknora는 문서 이해 및 시맨틱 검색을 위한 LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크입니다. 멀티모달 문서 전처리, 시맨틱 벡터 인덱싱, 하이브리드 검색, LLM 추론을 결합합니다.
 
 ## 기술 스택
 

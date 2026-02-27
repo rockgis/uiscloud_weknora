@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# WeKnora Docker Startup Script
-# Docker를 사용하여 WeKnora를 쉽게 실행하기 위한 스크립트
+# uiscloud_weknora Docker Startup Script
+# Docker를 사용하여 uiscloud_weknora를 쉽게 실행하기 위한 스크립트
 
 set -e
 
@@ -136,7 +136,7 @@ build_profiles() {
 
 # 서비스 시작
 start_services() {
-    echo -e "${GREEN}WeKnora 서비스를 시작합니다...${NC}"
+    echo -e "${GREEN}uiscloud_weknora 서비스를 시작합니다...${NC}"
 
     local profiles=$(build_profiles "$@")
     local build_flag=""
@@ -168,7 +168,7 @@ start_services() {
 
 # 서비스 중지
 stop_services() {
-    echo -e "${YELLOW}WeKnora 서비스를 중지합니다...${NC}"
+    echo -e "${YELLOW}uiscloud_weknora 서비스를 중지합니다...${NC}"
     docker compose --profile full down
     echo -e "${GREEN}서비스가 중지되었습니다.${NC}"
 }
@@ -191,7 +191,7 @@ show_logs() {
 
 # 서비스 상태 확인
 show_status() {
-    echo -e "${GREEN}WeKnora 서비스 상태:${NC}"
+    echo -e "${GREEN}uiscloud_weknora 서비스 상태:${NC}"
     docker compose ps -a
 }
 

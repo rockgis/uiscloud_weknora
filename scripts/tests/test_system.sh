@@ -1,7 +1,7 @@
 #!/bin/bash
-# WeKnora 시스템 전체 테스트 스크립트
+# uiscloud_weknora 시스템 전체 테스트 스크립트
 #
-# 이 스크립트는 WeKnora 시스템의 모든 주요 기능을 테스트합니다.
+# 이 스크립트는 uiscloud_weknora 시스템의 모든 주요 기능을 테스트합니다.
 # - 백엔드/프론트엔드 서버 상태
 # - 사용자 인증
 # - Ollama 연결
@@ -16,7 +16,7 @@
 #   - 모든 서비스가 실행 중이어야 함
 
 echo "=========================================="
-echo "  WeKnora 시스템 전체 테스트"
+echo "  uiscloud_weknora 시스템 전체 테스트"
 echo "=========================================="
 echo ""
 
@@ -32,7 +32,7 @@ echo ""
 
 # 2. 프론트엔드 테스트
 echo "2. 프론트엔드 서버 상태"
-if curl -s http://localhost:5173 | grep -q "WeKnora"; then
+if curl -s http://localhost:5173 | grep -q "uiscloud_weknora"; then
     echo "   ✓ 프론트엔드 정상 (http://localhost:5173)"
 else
     echo "   ✗ 프론트엔드 오류"
@@ -117,7 +117,7 @@ echo ""
 
 # 7. Docker 인프라 확인
 echo "7. Docker 인프라 서비스 상태"
-docker ps --format "table {{.Names}}\t{{.Status}}" | grep WeKnora | while read line; do
+docker ps --format "table {{.Names}}\t{{.Status}}" | grep uiscloud_weknora | while read line; do
     echo "   ✓ $line"
 done
 echo ""

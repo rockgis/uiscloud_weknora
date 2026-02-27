@@ -14,7 +14,7 @@
             <p>내장 모델은 모든 테넌트에게 표시되며, 민감한 정보는 숨겨지고 편집하거나 삭제할 수 없습니다.</p>
             <p class="doc-link">
               <t-icon name="link" class="link-icon" />
-              <a href="https://github.com/Tencent/WeKnora/blob/main/docs/BUILTIN_MODELS.md" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/rockgis/uiscloud_weknora/blob/main/docs/BUILTIN_MODELS.md" target="_blank" rel="noopener noreferrer">
                 내장 모델 관리 가이드 보기
               </a>
             </p>

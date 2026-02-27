@@ -1,4 +1,4 @@
-# WeKnora MCP Server 실행 가능 모듈 패키지 - 프로젝트 요약
+# uiscloud_weknora MCP Server 실행 가능 모듈 패키지 - 프로젝트 요약
 
 ## 프로젝트 완성 상태
 
@@ -7,7 +7,7 @@
 ## 프로젝트 구조
 
 ```
-WeKnoraMCP/
+uiscloud_weknora/
 ├── 핵심 파일
 │   ├── __init__.py              # 패키지 초기화 파일
 │   ├── weknora_mcp_server.py   # MCP 서버 핵심 구현
@@ -168,7 +168,7 @@ python test_module.py
 
 ### 테스트 결과
 ```
-WeKnora MCP Server 모듈 테스트
+uiscloud_weknora MCP Server 모듈 테스트
 ==================================================
 ✓ 모듈 임포트 테스트 통과
 ✓ 환경 설정 테스트 통과
@@ -230,7 +230,7 @@ CMD ["weknora-mcp-server"]
 ### 4. 시스템 서비스
 ```ini
 [Unit]
-Description=WeKnora MCP Server
+Description=uiscloud_weknora MCP Server
 
 [Service]
 ExecStart=/usr/local/bin/weknora-mcp-server
@@ -272,6 +272,6 @@ python test_module.py            # 테스트 실행
 ---
 
 **프로젝트 상태**: ✅ 완성 및 사용 가능
-**프로젝트 저장소**: https://github.com/NannaOlympicBroadcast/WeKnoraMCP
+**프로젝트 저장소**: https://github.com/rockgis/uiscloud_weknora
 **마지막 업데이트**: 2025년 10월
 **버전**: 1.0.0

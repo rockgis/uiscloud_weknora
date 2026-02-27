@@ -1,6 +1,6 @@
-# WeKnora MCP Server
+# uiscloud_weknora MCP Server
 
-이것은 WeKnora 지식 관리 API에 대한 접근을 제공하는 Model Context Protocol (MCP) 서버입니다.
+이것은 uiscloud_weknora 지식 관리 API에 대한 접근을 제공하는 Model Context Protocol (MCP) 서버입니다.
 
 ## 빠른 시작
 

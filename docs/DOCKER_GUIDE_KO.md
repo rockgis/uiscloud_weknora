@@ -1,6 +1,6 @@
-# WeKnora Docker 실행 가이드
+# uiscloud_weknora Docker 실행 가이드
 
-이 문서는 Docker를 사용하여 WeKnora를 실행하는 방법을 설명합니다.
+이 문서는 Docker를 사용하여 uiscloud_weknora를 실행하는 방법을 설명합니다.
 
 ## 목차
 
@@ -108,7 +108,7 @@ DOCREADER_PORT=50051    # 문서 파서 gRPC 포트
 ```env
 DB_USER=postgres
 DB_PASSWORD=postgres123!@#
-DB_NAME=WeKnora
+DB_NAME=uiscloud_weknora
 ```
 
 #### 저장소 설정
@@ -319,7 +319,7 @@ docker compose build app
 
 ```bash
 # PostgreSQL 데이터 백업
-docker compose exec postgres pg_dump -U postgres WeKnora > backup.sql
+docker compose exec postgres pg_dump -U postgres uiscloud_weknora > backup.sql
 
 # 볼륨 백업 (Docker 볼륨 위치)
 docker run --rm -v weknora_postgres-data:/data -v $(pwd):/backup alpine \

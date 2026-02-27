@@ -1,4 +1,4 @@
-# WeKnora 아키텍처 문서
+# uiscloud_weknora 아키텍처 문서
 
 > 버전: 0.2.2 | 최종 업데이트: 2026-02-26
 
@@ -24,7 +24,7 @@
 
 ## 1. 프로젝트 개요
 
-WeKnora는 문서 이해 및 시맨틱 검색을 위한 **LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크**다. 멀티모달 문서 전처리, 시맨틱 벡터 인덱싱, 하이브리드 검색, LLM 추론을 결합하며 멀티테넌시를 지원한다.
+uiscloud_weknora는 문서 이해 및 시맨틱 검색을 위한 **LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크**다. 멀티모달 문서 전처리, 시맨틱 벡터 인덱싱, 하이브리드 검색, LLM 추론을 결합하며 멀티테넌시를 지원한다.
 
 ### 핵심 기능
 
@@ -1051,7 +1051,7 @@ NEO4J_PASSWORD=password
 
 # 분산 추적 (선택)
 OTEL_EXPORTER_OTLP_ENDPOINT=jaeger:4317
-OTEL_SERVICE_NAME=WeKnora
+OTEL_SERVICE_NAME=uiscloud_weknora
 ```
 
 ---
@@ -1245,4 +1245,4 @@ tracing:
 
 ---
 
-*이 문서는 WeKnora v0.2.2 기준으로 작성되었습니다.*
+*이 문서는 uiscloud_weknora v0.2.2 기준으로 작성되었습니다.*

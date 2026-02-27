@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-WeKnora MCP Server
+uiscloud_weknora MCP Server
 
-A Model Context Protocol server that provides access to the WeKnora knowledge management API.
+A Model Context Protocol server that provides access to the uiscloud_weknora knowledge management API.
 """
 
 import json
@@ -27,10 +27,10 @@ WEKNORA_API_KEY = os.getenv("WEKNORA_API_KEY", "")
 
 
 class WeKnoraClient:
-    """Client for interacting with WeKnora API"""
+    """Client for interacting with uiscloud_weknora API"""
 
     def __init__(self, base_url: str, api_key: str):
-        """Initialize the WeKnora API client with base URL and authentication"""
+        """Initialize the uiscloud_weknora API client with base URL and authentication"""
         self.base_url = base_url
         self.api_key = api_key
         # Create a persistent session for connection pooling and performance
@@ -44,7 +44,7 @@ class WeKnoraClient:
         )
 
     def _request(self, method: str, endpoint: str, **kwargs) -> Dict[str, Any]:
-        """Make a request to the WeKnora API
+        """Make a request to the uiscloud_weknora API
 
         Args:
             method: HTTP method (GET, POST, PUT, DELETE)
@@ -246,19 +246,19 @@ class WeKnoraClient:
 
 # Initialize MCP server instance
 app = Server("weknora-server")
-# Initialize WeKnora API client with configuration
+# Initialize uiscloud_weknora API client with configuration
 client = WeKnoraClient(WEKNORA_BASE_URL, WEKNORA_API_KEY)
 
 
 # Tool definitions - Register all available tools for the MCP protocol
 @app.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
-    """List all available WeKnora tools with their schemas"""
+    """List all available uiscloud_weknora tools with their schemas"""
     return [
         # Tenant Management
         types.Tool(
             name="create_tenant",
-            description="Create a new tenant in WeKnora",
+            description="Create a new tenant in uiscloud_weknora",
             inputSchema={
                 "type": "object",
                 "properties": {

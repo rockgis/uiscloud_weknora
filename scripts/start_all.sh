@@ -18,7 +18,7 @@ SCRIPT_NAME=$(basename "$0")
 
 # 도움말 표시
 show_help() {
-    printf "%b\n" "${GREEN}WeKnora 시작 스크립트 v${VERSION}${NC}"
+    printf "%b\n" "${GREEN}uiscloud_weknora 시작 스크립트 v${VERSION}${NC}"
     printf "%b\n" "${GREEN}사용법:${NC} $0 [옵션]"
     echo "옵션:"
     echo "  -h, --help     도움말 표시"
@@ -37,7 +37,7 @@ show_help() {
 
 # 버전 정보 표시
 show_version() {
-    printf "%b\n" "${GREEN}WeKnora 시작 스크립트 v${VERSION}${NC}"
+    printf "%b\n" "${GREEN}uiscloud_weknora 시작 스크립트 v${VERSION}${NC}"
     exit 0
 }
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-WeKnora MCP Server 간편 시작 스크립트
+uiscloud_weknora MCP Server 간편 시작 스크립트
 
 기본적인 기능만 제공하는 간소화된 시작 스크립트입니다.
 더 많은 옵션이 필요하면 main.py를 사용하세요.
@@ -22,7 +22,7 @@ def main():
     base_url = os.getenv("WEKNORA_BASE_URL", "http://localhost:8080/api/v1")
     api_key = os.getenv("WEKNORA_API_KEY", "")
 
-    print("WeKnora MCP Server")
+    print("uiscloud_weknora MCP Server")
     print(f"Base URL: {base_url}")
     print(f"API Key: {'설정됨' if api_key else '설정되지 않음'}")
     print("-" * 40)

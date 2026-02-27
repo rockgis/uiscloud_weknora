@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: WeKnora 문서
-    url: https://github.com/Tencent/WeKnora/blob/main/docs/QA.md
-    about: WeKnora의 자주 묻는 질문 보기
+  - name: uiscloud_weknora 문서
+    url: https://github.com/rockgis/uiscloud_weknora/blob/main/docs/QA.md
+    about: uiscloud_weknora의 자주 묻는 질문 보기
   - name: 토론 게시판
-    url: https://github.com/Tencent/WeKnora/discussions
+    url: https://github.com/rockgis/uiscloud_weknora/discussions
     about: 토론 게시판에서 질문하거나 아이디어 공유하기

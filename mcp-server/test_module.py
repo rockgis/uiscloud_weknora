@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-WeKnora MCP Server 모듈 테스트 스크립트
+uiscloud_weknora MCP Server 모듈 테스트 스크립트
 
 모듈의 다양한 시작 방법과 기능을 테스트합니다.
 """
@@ -203,7 +203,7 @@ def test_package_installation():
 
 def main():
     """모든 테스트 실행"""
-    print("WeKnora MCP Server 모듈 테스트")
+    print("uiscloud_weknora MCP Server 모듈 테스트")
     print("=" * 50)
 
     tests = [

@@ -51,7 +51,7 @@ detect_compose_cmd() {
 
 # 도움말 표시
 show_help() {
-    printf "%b\n" "${GREEN}WeKnora 개발 환경 스크립트${NC}"
+    printf "%b\n" "${GREEN}uiscloud_weknora 개발 환경 스크립트${NC}"
     echo "사용법: $0 [명령] [옵션]"
     echo ""
     echo "명령:"

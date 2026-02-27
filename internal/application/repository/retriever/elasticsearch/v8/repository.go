@@ -7,10 +7,10 @@ import (
 	"os"
 	"strings"
 
-	elasticsearchRetriever "github.com/Tencent/WeKnora/internal/application/repository/retriever/elasticsearch"
+	elasticsearchRetriever "github.com/Tencent/uiscloud_weknora/internal/application/repository/retriever/elasticsearch"
 	"github.com/Tencent/WeKnora/internal/config"
 	"github.com/Tencent/WeKnora/internal/logger"
-	typesLocal "github.com/Tencent/WeKnora/internal/types"
+	typesLocal "github.com/Tencent/uiscloud_weknora/internal/types"
 	"github.com/Tencent/WeKnora/internal/types/interfaces"
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/typedapi/core/search"

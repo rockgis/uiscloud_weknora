@@ -1,7 +1,7 @@
-# WeKnora 로컬 개발 환경 구축 및 설정 가이드
+# uiscloud_weknora 로컬 개발 환경 구축 및 설정 가이드
 
 **작성일**: 2025-12-21
-**프로젝트**: WeKnora - LLM 기반 RAG 프레임워크
+**프로젝트**: uiscloud_weknora - LLM 기반 RAG 프레임워크
 **환경**: macOS (로컬 개발 환경)
 
 ---
@@ -22,9 +22,9 @@
 
 ## 프로젝트 개요
 
-### WeKnora란?
+### uiscloud_weknora란?
 
-WeKnora는 문서 이해 및 시맨틱 검색을 위한 LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크입니다. 멀티모달 문서 전처리, 시맨틱 벡터 인덱싱, 하이브리드 검색, LLM 추론을 결합합니다.
+uiscloud_weknora는 문서 이해 및 시맨틱 검색을 위한 LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크입니다. 멀티모달 문서 전처리, 시맨틱 벡터 인덱싱, 하이브리드 검색, LLM 추론을 결합합니다.
 
 ### 주요 기능
 
@@ -43,7 +43,7 @@ WeKnora는 문서 이해 및 시맨틱 검색을 위한 LLM 기반 RAG (Retrieva
 
 #### 디렉토리 구조
 ```
-WeKnora/
+uiscloud_weknora/
 ├── cmd/server/              # 애플리케이션 진입점
 ├── internal/
 │   ├── agent/              # ReACT 에이전트 구현
@@ -534,7 +534,7 @@ ollama list
 #### `/tmp/setup_models.sh`
 ```bash
 #!/bin/bash
-# WeKnora 모델 자동 설정 스크립트
+# uiscloud_weknora 모델 자동 설정 스크립트
 
 # 1. 로그인하여 토큰 받기
 TOKEN=$(curl -s -X POST http://localhost:8080/api/v1/auth/login \
@@ -610,7 +610,7 @@ curl -s http://localhost:8080/health
 # ✓ {"status":"ok"}
 
 # 2. 프론트엔드 서버 상태
-curl -s http://localhost:5173 | grep "WeKnora"
+curl -s http://localhost:5173 | grep "uiscloud_weknora"
 # ✓ 프론트엔드 정상
 
 # 3. 사용자 인증 테스트
@@ -861,7 +861,7 @@ make dev-stop
 **해결**:
 ```bash
 # 현재 버전 확인
-docker exec WeKnora-postgres-dev psql -U postgres -d WeKnora \
+docker exec uiscloud_weknora-postgres-dev psql -U postgres -d uiscloud_weknora \
   -c "SELECT version FROM schema_migrations;"
 
 # 마이그레이션 재실행
@@ -894,7 +894,7 @@ tail -f /tmp/weknora-backend.log
 tail -f /tmp/weknora-frontend.log
 
 # 데이터베이스 접속
-docker exec -it WeKnora-postgres-dev psql -U postgres -d WeKnora
+docker exec -it uiscloud_weknora-postgres-dev psql -U postgres -d uiscloud_weknora
 ```
 
 #### 빌드 및 테스트
@@ -918,11 +918,11 @@ make docs
 docker ps -a
 
 # 로그 확인
-docker logs WeKnora-postgres-dev
-docker logs WeKnora-redis-dev
+docker logs uiscloud_weknora-postgres-dev
+docker logs uiscloud_weknora-redis-dev
 
 # 볼륨 확인
-docker volume ls | grep WeKnora
+docker volume ls | grep uiscloud_weknora
 
 # 전체 정리 (주의: 데이터 삭제)
 docker-compose down -v
@@ -994,7 +994,7 @@ docker-compose down -v
 ### D. 참고 자료
 
 - **공식 문서**: https://weknora.weixin.qq.com
-- **GitHub**: https://github.com/Tencent/WeKnora
+- **GitHub**: https://github.com/rockgis/uiscloud_weknora
 - **Swagger UI**: http://localhost:8080/swagger/index.html
 - **Ollama 문서**: https://ollama.com/library
 

@@ -1,4 +1,4 @@
-# uv로 WeKnora MCP 서버 실행하기
+# uv로 uiscloud_weknora MCP 서버 실행하기
 
 > Python 기반 MCP 서비스를 실행할 때는 `uv`를 사용하는 것을 더 권장합니다.
 
@@ -27,7 +27,7 @@ Claude Desktop 설정에 추가:
     "weknora": {
       "args": [
         "--directory",
-        "/path/WeKnora/mcp-server",
+        "/path/uiscloud_weknora/mcp-server",
         "run",
         "run_server.py"
       ],
@@ -52,7 +52,7 @@ Cursor에서 MCP 설정 파일 편집 (일반적으로 `~/.cursor/mcp-config.jso
       "command": "uv",
       "args": [
         "--directory",
-        "/path/WeKnora/mcp-server",
+        "/path/uiscloud_weknora/mcp-server",
         "run",
         "run_server.py"
       ],
@@ -76,7 +76,7 @@ KiloCode 또는 MCP를 지원하는 다른 에디터의 경우 다음과 같이 
       "command": "uv",
       "args": [
         "--directory",
-        "/path/WeKnora/mcp-server",
+        "/path/uiscloud_weknora/mcp-server",
         "run",
         "run_server.py"
       ],
@@ -100,7 +100,7 @@ KiloCode 또는 MCP를 지원하는 다른 에디터의 경우 다음과 같이 
       "command": "uv",
       "args": [
         "--directory",
-        "/path/WeKnora/mcp-server",
+        "/path/uiscloud_weknora/mcp-server",
         "run",
         "run_server.py"
       ],

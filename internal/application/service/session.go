@@ -11,8 +11,8 @@ import (
 
 	"github.com/Tencent/WeKnora/internal/agent"
 	"github.com/Tencent/WeKnora/internal/agent/tools"
-	chatpipline "github.com/Tencent/WeKnora/internal/application/service/chat_pipline"
-	llmcontext "github.com/Tencent/WeKnora/internal/application/service/llmcontext"
+	chatpipline "github.com/Tencent/uiscloud_weknora/internal/application/service/chat_pipline"
+	llmcontext "github.com/Tencent/uiscloud_weknora/internal/application/service/llmcontext"
 	"github.com/Tencent/WeKnora/internal/config"
 	"github.com/Tencent/WeKnora/internal/event"
 	"github.com/Tencent/WeKnora/internal/logger"

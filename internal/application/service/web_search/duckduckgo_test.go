@@ -248,7 +248,7 @@ func TestDuckDuckGo_SearchChinese(t *testing.T) {
 	}
 
 	// Test with a Korean query
-	query := "WeKnora 엔터프라이즈 RAG 프레임워크 소개 문서"
+	query := "uiscloud_weknora 엔터프라이즈 RAG 프레임워크 소개 문서"
 	maxResults := 3
 
 	results, err := provider.Search(ctx, query, maxResults, false)

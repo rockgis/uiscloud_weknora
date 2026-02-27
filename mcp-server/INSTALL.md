@@ -1,4 +1,4 @@
-# WeKnora MCP Server 설치 및 사용 가이드
+# uiscloud_weknora MCP Server 설치 및 사용 가이드
 
 ## 빠른 시작
 
@@ -94,7 +94,7 @@ python main.py --check-only
 ```
 
 이 명령은 다음 정보를 표시합니다:
-- WeKnora API 기본 URL 설정
+- uiscloud_weknora API 기본 URL 설정
 - API 키 설정 상태
 - 의존성 패키지 설치 상태
 
@@ -107,9 +107,9 @@ python main.py --check-only
 - 파일명 충돌 없는지 확인
 
 ### 2. 연결 오류
-WeKnora API에 연결할 수 없는 경우:
+uiscloud_weknora API에 연결할 수 없는 경우:
 - `WEKNORA_BASE_URL`이 올바른지 확인
-- WeKnora 서비스가 실행 중인지 확인
+- uiscloud_weknora 서비스가 실행 중인지 확인
 - 네트워크 연결 확인
 
 ### 3. 인증 오류
@@ -122,7 +122,7 @@ WeKnora API에 연결할 수 없는 경우:
 
 ### 프로젝트 구조
 ```
-WeKnoraMCP/
+uiscloud_weknora/
 ├── __init__.py              # 패키지 초기화 파일
 ├── main.py                  # 주 진입점
 ├── run_server.py           # 원본 시작 스크립트
@@ -177,7 +177,7 @@ CMD ["weknora-mcp-server"]
 systemd 서비스 파일 `/etc/systemd/system/weknora-mcp.service` 생성:
 ```ini
 [Unit]
-Description=WeKnora MCP Server
+Description=uiscloud_weknora MCP Server
 After=network.target
 
 [Service]
@@ -205,4 +205,4 @@ sudo systemctl start weknora-mcp
 1. 로그 출력 확인
 2. 환경 설정 확인
 3. 문제 해결 섹션 참고
-4. 프로젝트 저장소에 이슈 제출: https://github.com/NannaOlympicBroadcast/WeKnoraMCP/issues
+4. 프로젝트 저장소에 이슈 제출: https://github.com/rockgis/uiscloud_weknora/issues

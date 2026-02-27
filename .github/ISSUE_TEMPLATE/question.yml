@@ -1,5 +1,5 @@
 name: ❓ 질문
-description: WeKnora에 관한 질문을 하거나 도움을 요청합니다
+description: uiscloud_weknora에 관한 질문을 하거나 도움을 요청합니다
 title: "[Question]: "
 labels: ["question", "needs-triage"]
 body:
@@ -57,7 +57,7 @@ body:
       label: 기타 환경 정보
       description: 기타 관련 환경 정보를 제공해주세요
       placeholder: |
-        - WeKnora 버전: [예: v1.0.0]
+        - uiscloud_weknora 버전: [예: v1.0.0]
         - 배포 방식: [예: Docker, 소스 빌드]
         - 기타 관련 정보...
 

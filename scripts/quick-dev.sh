@@ -31,7 +31,7 @@ log_warning() {
 
 echo ""
 printf "%b\n" "${GREEN}========================================${NC}"
-printf "%b\n" "${GREEN}  WeKnora 빠른 개발 환경 시작${NC}"
+printf "%b\n" "${GREEN}  uiscloud_weknora 빠른 개발 환경 시작${NC}"
 printf "%b\n" "${GREEN}========================================${NC}"
 echo ""
 

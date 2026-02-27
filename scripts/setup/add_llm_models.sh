@@ -1,5 +1,5 @@
 #!/bin/bash
-# WeKnora 추가 LLM 모델 등록 스크립트
+# uiscloud_weknora 추가 LLM 모델 등록 스크립트
 #
 # 이 스크립트는 기본 모델 외에 추가 LLM 모델들을 등록합니다.
 # - gemma2:9b (Agent 모드용 고성능 모델)

@@ -2407,10 +2407,10 @@ const downloadExampleOptions = computed(() => [
 
 const exampleData: FAQEntryPayload[] = [
   {
-    standard_question: 'WeKnora란 무엇인가요?',
-    answers: ['WeKnora는 지능형 지식베이스 관리 시스템입니다', '다양한 지식베이스 유형과 가져오기 방식을 지원합니다'],
-    similar_questions: ['WeKnora가 뭔가요?', 'WeKnora를 소개해 주세요'],
-    negative_questions: ['이것은 WeKnora가 아닙니다', 'WeKnora와 무관합니다'],
+    standard_question: 'uiscloud_weknora란 무엇인가요?',
+    answers: ['uiscloud_weknora는 지능형 지식베이스 관리 시스템입니다', '다양한 지식베이스 유형과 가져오기 방식을 지원합니다'],
+    similar_questions: ['uiscloud_weknora가 뭔가요?', 'uiscloud_weknora를 소개해 주세요'],
+    negative_questions: ['이것은 uiscloud_weknora가 아닙니다', 'uiscloud_weknora와 무관합니다'],
     tag_name: '제품 소개',
   },
   {

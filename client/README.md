@@ -1,6 +1,6 @@
-# WeKnora HTTP 클라이언트
+# uiscloud_weknora HTTP 클라이언트
 
-이 패키지는 WeKnora 서비스와 상호작용하기 위한 클라이언트 라이브러리를 제공합니다. HTTP 기반의 모든 인터페이스 호출을 지원하여, 다른 모듈에서 HTTP 요청 코드를 직접 작성하지 않고도 WeKnora 서비스를 손쉽게 통합할 수 있습니다.
+이 패키지는 uiscloud_weknora 서비스와 상호작용하기 위한 클라이언트 라이브러리를 제공합니다. HTTP 기반의 모든 인터페이스 호출을 지원하여, 다른 모듈에서 HTTP 요청 코드를 직접 작성하지 않고도 uiscloud_weknora 서비스를 손쉽게 통합할 수 있습니다.
 
 ## 주요 기능
 
@@ -23,7 +23,7 @@
 ```go
 import (
     "context"
-    "github.com/Tencent/WeKnora/internal/client"
+    "github.com/rockgis/uiscloud_weknora/internal/client"
     "time"
 )
 

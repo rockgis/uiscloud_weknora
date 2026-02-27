@@ -2,7 +2,7 @@
 
 # Show help
 help:
-	@echo "WeKnora Makefile 도움말"
+	@echo "uiscloud_weknora Makefile 도움말"
 	@echo ""
 	@echo "기본 명령:"
 	@echo "  build             애플리케이션 빌드"
@@ -58,7 +58,7 @@ help:
 	@echo "  dev-frontend      프론트엔드 시작 (로컬 실행, dev-start 먼저 실행 필요)"
 
 # Go related variables
-BINARY_NAME=WeKnora
+BINARY_NAME=uiscloud_weknora
 MAIN_PATH=./cmd/server
 
 # Docker related variables

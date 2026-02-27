@@ -197,7 +197,7 @@ func (c *mcpGoClient) Initialize(ctx context.Context) (*InitializeResult, error)
 			ProtocolVersion: mcp.LATEST_PROTOCOL_VERSION,
 			Capabilities:    mcp.ClientCapabilities{},
 			ClientInfo: mcp.Implementation{
-				Name:    "WeKnora",
+				Name:    "uiscloud_weknora",
 				Version: "1.0.0",
 			},
 		},

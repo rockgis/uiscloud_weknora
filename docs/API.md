@@ -1,4 +1,4 @@
-# WeKnora API 문서
+# uiscloud_weknora API 문서
 
 ## 목차
 
@@ -22,7 +22,7 @@
 
 ## 개요
 
-WeKnora는 지식베이스 생성 및 관리, 지식 검색, 지식 기반 질의응답을 위한 RESTful API를 제공합니다. 본 문서는 이러한 API의 사용 방법을 상세히 설명합니다.
+uiscloud_weknora는 지식베이스 생성 및 관리, 지식 검색, 지식 기반 질의응답을 위한 RESTful API를 제공합니다. 본 문서는 이러한 API의 사용 방법을 상세히 설명합니다.
 
 ## 기본 정보
 
@@ -67,7 +67,7 @@ API Key는 안전하게 보관하고 유출되지 않도록 주의하세요. API
 
 ## API 개요
 
-WeKnora API는 기능에 따라 다음과 같이 분류됩니다:
+uiscloud_weknora API는 기능에 따라 다음과 같이 분류됩니다:
 
 1. **테넌트 관리**: 테넌트 계정 생성 및 관리
 2. **지식베이스 관리**: 지식베이스 생성, 조회 및 관리
@@ -776,7 +776,7 @@ curl --location 'http://localhost:8080/api/v1/knowledge-bases/kb-00000001/knowle
 --header 'X-API-Key: sk-vQHV2NZI_LK5W7wHQvH3yGYExX8YnhaHwZipUYbiZKCYJbBQ' \
 --header 'Content-Type: application/json' \
 --data '{
-    "url":"https://github.com/Tencent/WeKnora",
+    "url":"https://github.com/rockgis/uiscloud_weknora",
     "enable_multimodel":true
 }'
 ```
@@ -792,7 +792,7 @@ curl --location 'http://localhost:8080/api/v1/knowledge-bases/kb-00000001/knowle
         "type": "url",
         "title": "",
         "description": "",
-        "source": "https://github.com/Tencent/WeKnora",
+        "source": "https://github.com/rockgis/uiscloud_weknora",
         "parse_status": "processing",
         "enable_status": "disabled",
         "embedding_model_id": "dff7bc94-7885-4dd1-bfd5-bd96e4df2fc3",
@@ -840,7 +840,7 @@ curl --location 'http://localhost:8080/api/v1/knowledge-bases/kb-00000001/knowle
             "type": "url",
             "title": "",
             "description": "",
-            "source": "https://github.com/Tencent/WeKnora",
+            "source": "https://github.com/rockgis/uiscloud_weknora",
             "parse_status": "pending",
             "enable_status": "disabled",
             "embedding_model_id": "dff7bc94-7885-4dd1-bfd5-bd96e4df2fc3",
@@ -931,7 +931,7 @@ curl --location 'http://localhost:8080/api/v1/knowledge/batch?ids=9c8af585-ae15-
             "type": "url",
             "title": "",
             "description": "",
-            "source": "https://github.com/Tencent/WeKnora",
+            "source": "https://github.com/rockgis/uiscloud_weknora",
             "parse_status": "pending",
             "enable_status": "disabled",
             "embedding_model_id": "dff7bc94-7885-4dd1-bfd5-bd96e4df2fc3",

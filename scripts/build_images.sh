@@ -1,5 +1,5 @@
 #!/bin/bash
-# 이 스크립트는 소스 코드에서 WeKnora의 모든 Docker 이미지를 빌드합니다
+# 이 스크립트는 소스 코드에서 uiscloud_weknora의 모든 Docker 이미지를 빌드합니다
 
 # 색상 설정
 GREEN='\033[0;32m'
@@ -18,7 +18,7 @@ SCRIPT_NAME=$(basename "$0")
 
 # 도움말 표시
 show_help() {
-    echo -e "${GREEN}WeKnora 이미지 빌드 스크립트 v${VERSION}${NC}"
+    echo -e "${GREEN}uiscloud_weknora 이미지 빌드 스크립트 v${VERSION}${NC}"
     echo -e "${GREEN}사용법:${NC} $0 [옵션]"
     echo "옵션:"
     echo "  -h, --help     도움말 표시"
@@ -33,7 +33,7 @@ show_help() {
 
 # 버전 정보 표시
 show_version() {
-    echo -e "${GREEN}WeKnora 이미지 빌드 스크립트 v${VERSION}${NC}"
+    echo -e "${GREEN}uiscloud_weknora 이미지 빌드 스크립트 v${VERSION}${NC}"
     exit 0
 }
 
@@ -250,7 +250,7 @@ build_all_images() {
 
 # 로컬 이미지 정리
 clean_images() {
-    log_info "로컬 WeKnora 이미지 정리 중..."
+    log_info "로컬 uiscloud_weknora 이미지 정리 중..."
 
     # 관련 컨테이너 중지
     log_info "관련 컨테이너 중지 중..."

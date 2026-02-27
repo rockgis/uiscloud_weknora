@@ -15,7 +15,7 @@ import (
 
 	"github.com/Tencent/WeKnora/docreader/client"
 	"github.com/Tencent/WeKnora/docreader/proto"
-	chatpipline "github.com/Tencent/WeKnora/internal/application/service/chat_pipline"
+	chatpipline "github.com/Tencent/uiscloud_weknora/internal/application/service/chat_pipline"
 	"github.com/Tencent/WeKnora/internal/config"
 	"github.com/Tencent/WeKnora/internal/errors"
 	"github.com/Tencent/WeKnora/internal/logger"

@@ -11,8 +11,8 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "WeKnora Github",
-            "url": "https://github.com/Tencent/WeKnora"
+            "name": "uiscloud_weknora Github",
+            "url": "https://github.com/rockgis/uiscloud_weknora"
         },
         "version": "{{.Version}}"
     },
@@ -7395,8 +7395,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "WeKnora API",
-	Description:      "WeKnora 지식베이스 관리 시스템 API 문서",
+	Title:            "uiscloud_weknora API",
+	Description:      "uiscloud_weknora 지식베이스 관리 시스템 API 문서",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

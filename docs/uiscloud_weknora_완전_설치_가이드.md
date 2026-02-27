@@ -1,8 +1,8 @@
-# WeKnora 완전 설치 및 운영 가이드
+# uiscloud_weknora 완전 설치 및 운영 가이드
 
 **버전**: 1.0
 **작성일**: 2025-12-21
-**프로젝트**: WeKnora - LLM 기반 RAG 프레임워크
+**프로젝트**: uiscloud_weknora - LLM 기반 RAG 프레임워크
 **환경**: macOS 로컬 개발 환경
 
 ---
@@ -23,9 +23,9 @@
 
 ## 1. 프로젝트 개요
 
-### 1.1 WeKnora란?
+### 1.1 uiscloud_weknora란?
 
-WeKnora는 **문서 이해 및 시맨틱 검색**을 위한 LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크입니다.
+uiscloud_weknora는 **문서 이해 및 시맨틱 검색**을 위한 LLM 기반 RAG (Retrieval-Augmented Generation) 프레임워크입니다.
 
 #### 주요 특징
 - 🤖 **Agent 모드**: ReACT Agent를 통한 도구 사용 및 반복적 추론
@@ -52,7 +52,7 @@ WeKnora는 **문서 이해 및 시맨틱 검색**을 위한 LLM 기반 RAG (Retr
 ### 2.1 전체 구조
 
 ```
-WeKnora/
+uiscloud_weknora/
 ├── cmd/server/              # 애플리케이션 진입점
 ├── internal/                # 내부 패키지
 │   ├── agent/              # ReACT 에이전트 (4개 파일)
@@ -304,7 +304,7 @@ DB_HOST=localhost
 DB_DRIVER=postgres
 DB_USER=postgres
 DB_PASSWORD=postgres123!@#
-DB_NAME=WeKnora
+DB_NAME=uiscloud_weknora
 
 # DocReader gRPC
 DOCREADER_ADDR=localhost:50051
@@ -326,7 +326,7 @@ REDIS_DB=0
 
 ```bash
 # 저장소 클론 (이미 있다면 생략)
-cd /Volumes/dev/workspace/knowwheresoft/hymakina_workspace/WeKnora
+cd /Volumes/dev/workspace/knowwheresoft/hymakina_workspace/uiscloud_weknora
 
 # 백엔드 의존성
 go mod download
@@ -390,7 +390,7 @@ docker ps
 make migrate-up
 
 # 버전 확인
-docker exec WeKnora-postgres-dev psql -U postgres -d WeKnora \
+docker exec uiscloud_weknora-postgres-dev psql -U postgres -d uiscloud_weknora \
   -c "SELECT version FROM schema_migrations;"
 ```
 
@@ -416,7 +416,7 @@ make dev-frontend
 
 # 접속 확인
 curl http://localhost:5173
-# <!DOCTYPE html> ... WeKnora ...
+# <!DOCTYPE html> ... uiscloud_weknora ...
 ```
 
 #### 8단계: 첫 사용자 계정 생성
@@ -483,7 +483,7 @@ ollama list
 ./scripts/setup/setup_models.sh
 
 # 출력:
-# === WeKnora 모델 자동 설정 시작 ===
+# === uiscloud_weknora 모델 자동 설정 시작 ===
 # 1. 로그인 중...
 # ✓ 로그인 성공
 # 2. Embedding 모델 등록 중...
@@ -593,7 +593,7 @@ curl -X POST http://localhost:8080/api/v1/models \
 **출력 예시**:
 ```
 ==========================================
-  WeKnora 시스템 전체 테스트
+  uiscloud_weknora 시스템 전체 테스트
 ==========================================
 
 1. 백엔드 서버 상태
@@ -672,7 +672,7 @@ curl -X POST http://localhost:8080/api/v1/models \
 **출력 예시**:
 ```
 ==========================================
-  WeKnora 시스템 상태 확인
+  uiscloud_weknora 시스템 상태 확인
 ==========================================
 
 ✓ 백엔드 정상 (포트 8080)
@@ -680,12 +680,12 @@ curl -X POST http://localhost:8080/api/v1/models \
 ✓ Ollama 정상 (포트 11434)
 
 Docker 인프라 서비스:
-✓ WeKnora-postgres-dev: Up 10 minutes (healthy)
-✓ WeKnora-redis-dev: Up 10 minutes
-✓ WeKnora-docreader-dev: Up 10 minutes (healthy)
-✓ WeKnora-qdrant-dev: Up 10 minutes
-✓ WeKnora-neo4j-dev: Up 10 minutes
-✓ WeKnora-jaeger-dev: Up 10 minutes
+✓ uiscloud_weknora-postgres-dev: Up 10 minutes (healthy)
+✓ uiscloud_weknora-redis-dev: Up 10 minutes
+✓ uiscloud_weknora-docreader-dev: Up 10 minutes (healthy)
+✓ uiscloud_weknora-qdrant-dev: Up 10 minutes
+✓ uiscloud_weknora-neo4j-dev: Up 10 minutes
+✓ uiscloud_weknora-jaeger-dev: Up 10 minutes
 ```
 
 ### 5.3 스크립트 활용 시나리오
@@ -1057,7 +1057,7 @@ migration version mismatch
 **해결**:
 ```bash
 # 현재 버전 확인
-docker exec WeKnora-postgres-dev psql -U postgres -d WeKnora \
+docker exec uiscloud_weknora-postgres-dev psql -U postgres -d uiscloud_weknora \
   -c "SELECT version FROM schema_migrations;"
 
 # 롤백 후 재실행
@@ -1267,7 +1267,7 @@ tail -f /tmp/weknora-backend.log
 tail -f /tmp/weknora-frontend.log
 
 # 데이터베이스 접속
-docker exec -it WeKnora-postgres-dev psql -U postgres -d WeKnora
+docker exec -it uiscloud_weknora-postgres-dev psql -U postgres -d uiscloud_weknora
 ```
 
 #### 빌드 및 테스트
@@ -1297,14 +1297,14 @@ docker ps -a
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
 # 로그 확인
-docker logs WeKnora-postgres-dev
-docker logs WeKnora-redis-dev -f
+docker logs uiscloud_weknora-postgres-dev
+docker logs uiscloud_weknora-redis-dev -f
 
 # 볼륨 확인
-docker volume ls | grep WeKnora
+docker volume ls | grep uiscloud_weknora
 
 # 컨테이너 재시작
-docker restart WeKnora-postgres-dev
+docker restart uiscloud_weknora-postgres-dev
 
 # 전체 정리 (주의: 데이터 삭제됨)
 docker-compose down -v
@@ -1402,7 +1402,7 @@ STREAM_MANAGER_TYPE=memory
 ### 9.4 프로젝트 링크
 
 - **공식 웹사이트**: https://weknora.weixin.qq.com
-- **GitHub**: https://github.com/Tencent/WeKnora
+- **GitHub**: https://github.com/rockgis/uiscloud_weknora
 - **Swagger UI**: http://localhost:8080/swagger/index.html
 - **Ollama 라이브러리**: https://ollama.com/library
 

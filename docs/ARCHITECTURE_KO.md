@@ -1,6 +1,6 @@
-# WeKnora 아키텍처 상세 분석
+# uiscloud_weknora 아키텍처 상세 분석
 
-이 문서는 WeKnora 프로젝트의 전체 아키텍처를 상세하게 분석한 기술 문서입니다.
+이 문서는 uiscloud_weknora 프로젝트의 전체 아키텍처를 상세하게 분석한 기술 문서입니다.
 
 ## 목차
 
@@ -1475,4 +1475,4 @@ docker-compose --profile neo4j --profile minio up -d
 
 ---
 
-*이 문서는 WeKnora v0.2.x 기준으로 작성되었습니다.*
+*이 문서는 uiscloud_weknora v0.2.x 기준으로 작성되었습니다.*

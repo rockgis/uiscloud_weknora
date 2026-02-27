@@ -9,8 +9,8 @@
 
 ### 추가
 - 초기 버전 출시
-- WeKnora MCP Server 핵심 기능
-- 완전한 WeKnora API 통합
+- uiscloud_weknora MCP Server 핵심 기능
+- 완전한 uiscloud_weknora API 통합
 - 테넌트 관리 도구
 - 지식 베이스 관리 도구
 - 지식 관리 도구
@@ -50,7 +50,7 @@
 
 ### 파일 구조
 ```
-WeKnoraMCP/
+uiscloud_weknora/
 ├── __init__.py              # 패키지 초기화 파일
 ├── main.py                  # 주 진입점 (권장)
 ├── run.py                   # 편의 시작 스크립트
