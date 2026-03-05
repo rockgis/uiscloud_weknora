@@ -22,7 +22,7 @@
         <img src="https://img.shields.io/badge/License-MIT-ffffff?labelColor=d4eaf7&color=2e6cc4" alt="License">
     </a>
     <a href="./CHANGELOG.md">
-        <img alt="Version" src="https://img.shields.io/badge/version-0.2.3-2e6cc4?labelColor=d4eaf7">
+        <img alt="Version" src="https://img.shields.io/badge/version-0.2.6-2e6cc4?labelColor=d4eaf7">
     </a>
     <a href="https://github.com/rockgis/uiscloud_weknora/actions/workflows/ci.yml">
         <img alt="CI" src="https://github.com/rockgis/uiscloud_weknora/actions/workflows/ci.yml/badge.svg">

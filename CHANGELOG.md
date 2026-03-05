@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.6] - 2026-02-27
+
+### 📚 Documentation
+- **NEW**: 릴리즈 기반 배포 가이드 추가 (`docs/배포_가이드.md`)
+  - 원라인 설치, 환경 설정, 서비스 관리, 업데이트, 백업, 문제 해결 포함
+- **UPDATED**: README / README_EN 배포 가이드 링크 및 원라인 설치 안내 추가
+  - 네비게이션 바에 `배포 가이드` / `Deployment Guide` 항목 추가
+
+### ⚙️ CI/CD
+- **IMPROVED**: CI `actions/setup-node` 버전 지정을 `node-version-file: .nvmrc` 방식으로 변경
+  - 로컬 개발 환경과 CI 버전을 `.nvmrc` 단일 파일로 통합 관리
+
+### 🔧 Infrastructure
+- **UPGRADED**: Node.js 버전 `20.14.0` → `22.22.0` (LTS)
+  - Vite 7 요구사항 충족 (20.19+ 또는 22.12+)
+  - `.nvmrc` 파일 추가 (루트 및 `frontend/`)
+
+---
+
+## [0.2.5] - 2026-02-27
+
+### 🚀 New Features
+- **NEW**: GitHub Release 자동 생성 (`softprops/action-gh-release@v2`)
+  - `v*` 태그 push 시 `docker-compose.yml`, `.env.example`, `install.sh` 자동 첨부
+- **NEW**: 서버 원라인 설치 스크립트 (`scripts/install.sh`)
+  - 버전 자동 감지 (인수 → 내장 버전 → GitHub API 최신)
+  - Docker / Docker Compose 사전 요구사항 자동 확인
+  - 최초 설치 시 DB, Redis, JWT, AES 키 자동 생성
+  - `WEKNORA_DIR` 환경변수로 설치 경로 변경 가능
+
+### ⚙️ CI/CD
+- **IMPROVED**: CD 파이프라인 빌드 성능 대폭 향상
+  - `buildkit-cache-dance` 제거: amd64 빌드 시간 50분+ → 약 3분으로 단축
+  - 레지스트리 기반 레이어 캐시(`ghcr.io/.../buildcache-{arch}`)만으로 충분
+- **FIXED**: `docker/Dockerfile.app` 불필요한 yanyiwu 관련 죽은 코드 제거
+- **FIXED**: `.gitignore`의 `server` 항목 제거 → `cmd/server/` 디렉토리 Git 추적 복구
+- **FIXED**: CI Go 테스트에서 `docreader/client` 통합 테스트 제외 (gRPC 서버 필요)
+- **FIXED**: CI golangci-lint `only-new-issues: true` 적용 (pre-existing 이슈 무시)
+- **FIXED**: CI Frontend 빌드 pnpm 버전 명시 (`version: 10`)
+- **FIXED**: `.golangci.yml` v2 문법 호환성 오류 수정 (`formatters:`, `version:` 제거)
+- **FIXED**: Frontend TypeScript 타입 오류 수정 (5개 파일, 15개 오류)
+
+---
+
 ## [0.2.4] - 2026-02-27
 
 ### ♻️ Refactoring
@@ -348,6 +392,9 @@ All notable changes to this project will be documented in this file.
 - Docker Compose for quick startup and service orchestration.
 - MCP server support for integrating with MCP-compatible clients.
 
+[0.2.6]: https://github.com/rockgis/uiscloud_weknora/compare/v0.2.5...v0.2.6
+[0.2.5]: https://github.com/rockgis/uiscloud_weknora/compare/v0.2.4...v0.2.5
+[0.2.4]: https://github.com/rockgis/uiscloud_weknora/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/rockgis/uiscloud_weknora/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/rockgis/uiscloud_weknora/tree/v0.2.2
 [0.2.1]: https://github.com/rockgis/uiscloud_weknora/tree/v0.2.1
