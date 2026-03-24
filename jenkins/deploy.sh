@@ -72,6 +72,9 @@ log "WeKnora 배포 시작 — 환경: ${DEPLOY_ENV}, 태그: ${IMAGE_TAG}"
 [[ ! -f "${COMPOSE_BASE}" ]] && fail "docker-compose.yml 파일이 없습니다: ${COMPOSE_BASE}"
 [[ ! -f "${SCRIPT_DIR}/.env" ]] && fail ".env 파일이 없습니다. .env.example을 복사하여 설정하세요."
 
+# .env에서 선택적 서비스 활성화 여부 읽기
+NEO4J_ENABLE=$(grep "^NEO4J_ENABLE=" "${SCRIPT_DIR}/.env" 2>/dev/null | cut -d= -f2 | tr -d '[:space:]' || echo "")
+
 command -v docker &>/dev/null || fail "docker가 설치되어 있지 않습니다."
 docker info &>/dev/null       || fail "Docker 데몬이 실행 중이지 않습니다."
 
@@ -102,6 +105,12 @@ log "서비스 재시작 중..."
 # 인프라 서비스 (실행 중이면 유지)
 ${COMPOSE_CMD} up -d --no-recreate postgres redis
 ok "인프라 서비스(postgres, redis) 확인 완료"
+
+# Neo4j 시작 (NEO4J_ENABLE=true인 경우)
+if [[ "${NEO4J_ENABLE}" == "true" ]]; then
+    ${COMPOSE_CMD} --profile neo4j up -d --no-recreate neo4j
+    ok "Neo4j 서비스 확인 완료"
+fi
 
 # Docreader 재시작 + 헬스체크
 ${COMPOSE_CMD} up -d --force-recreate docreader
