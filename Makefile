@@ -1,4 +1,4 @@
-.PHONY: help build run test clean docker-build-app docker-build-docreader docker-build-frontend docker-build-all docker-run migrate-up migrate-down docker-restart docker-stop start-all stop-all start-ollama stop-ollama build-images build-images-app build-images-docreader build-images-frontend clean-images check-env list-containers pull-images show-platform dev-start dev-stop dev-restart dev-logs dev-status dev-app dev-frontend docs install-swagger
+.PHONY: help build run test clean docker-build-app docker-build-docreader docker-build-frontend docker-build-all docker-run migrate-up migrate-down docker-restart docker-stop start-all stop-all start-ollama stop-ollama build-images build-images-app build-images-docreader build-images-frontend clean-images check-env list-containers pull-images show-platform dev-start dev-stop dev-restart dev-logs dev-status dev-app dev-frontend docs install-swagger package package-offline package-offline-build transfer
 
 # Show help
 help:
@@ -48,6 +48,13 @@ help:
 	@echo "  pull-images       최신 이미지 pull"
 	@echo "  show-platform     현재 빌드 플랫폼 표시"
 	@echo ""
+	@echo "배포:"
+	@echo "  package           온라인 배포 패키지 생성 (스크립트+설정, ~20KB)"
+	@echo "  package-offline   오프라인 배포 패키지 생성 (Docker 이미지 포함, 1-5GB)"
+	@echo "  transfer          패키지 빌드 + 서버 전송 + 자동 설치"
+	@echo "                    사용: make transfer  (.server-config 설정 필요)"
+	@echo "                    직접: make transfer SERVER=deploy@192.168.1.100"
+	@echo ""
 	@echo "개발 모드 (권장):"
 	@echo "  dev-start         개발 환경 인프라 시작 (의존 서비스만 시작)"
 	@echo "  dev-stop          개발 환경 중지"
@@ -95,7 +102,7 @@ clean:
 
 # Build Docker image
 docker-build-app:
-	@echo "获取版本信息..."
+	@echo "버전 정보 조회..."
 	@eval $$(./scripts/get_version.sh env); \
 	./scripts/get_version.sh info; \
 	docker build --platform $(PLATFORM) \
@@ -116,31 +123,31 @@ docker-build-frontend:
 # Build all Docker images
 docker-build-all: docker-build-app docker-build-docreader docker-build-frontend
 
-# Run Docker container (传统方式)
+# Run Docker container
 docker-run:
 	docker-compose up
 
-# 使用新脚本启动所有服务
+# 모든 서비스 시작
 start-all:
 	./scripts/start_all.sh
 
-# 使用新脚本仅启动Ollama服务
+# Ollama 서비스만 시작
 start-ollama:
 	./scripts/start_all.sh --ollama
 
-# 使用新脚本仅启动Docker容器
+# Docker 컨테이너만 시작
 start-docker:
 	./scripts/start_all.sh --docker
 
-# 使用新脚本停止所有服务
+# 모든 서비스 중지
 stop-all:
 	./scripts/start_all.sh --stop
 
-# Stop Docker container (传统方式)
+# Docker 컨테이너 중지
 docker-stop:
 	docker-compose down
 
-# 从源码构建镜像相关命令
+# 소스에서 이미지 빌드
 build-images:
 	./scripts/build_images.sh
 
@@ -156,7 +163,7 @@ build-images-frontend:
 clean-images:
 	./scripts/build_images.sh --clean
 
-# Restart Docker container (stop, start)
+# Docker 컨테이너 재시작
 docker-restart:
 	docker-compose stop -t 60
 	docker-compose up
@@ -197,10 +204,10 @@ migrate-goto:
 
 # Generate API documentation (Swagger)
 docs:
-	@echo "生成 Swagger API 文档..."
+	@echo "Swagger API 문서 생성 중..."
 	swag init -g $(MAIN_PATH)/main.go -o ./docs --parseDependency --parseInternal
-	@echo "文档已生成到 ./docs 目录"
-	@echo "启动服务后访问 http://localhost:8080/swagger/index.html 查看文档"
+	@echo "문서가 ./docs 디렉토리에 생성되었습니다."
+	@echo "서비스 시작 후 http://localhost:8080/swagger/index.html 에서 확인하세요."
 
 # Install swagger tool
 install-swagger:
@@ -278,4 +285,28 @@ dev-app:
 dev-frontend:
 	./scripts/dev.sh frontend
 
+# 온라인 배포 패키지 생성 (~15KB, 서버에서 이미지 Pull)
+package:
+	@bash scripts/package.sh
 
+# 오프라인 배포 패키지 생성 (Docker 이미지 포함, 1-5GB)
+# docreader 제외 시: make package-offline ARGS="--skip-docreader"
+package-offline:
+	@bash scripts/package.sh --offline $(ARGS)
+
+# 이미지를 빌드하고 오프라인 패키지 생성
+package-offline-build:
+	@bash scripts/package.sh --offline --build-images $(ARGS)
+
+# 패키지 빌드 + 서버 전송 + 자동 설치
+# 사용법:
+#   make transfer                        # deploy/.server-config 설정 사용
+#   make transfer SERVER=deploy@1.2.3.4  # 직접 지정
+#   make transfer SERVER=deploy@1.2.3.4 KEY=~/.ssh/prod.pem
+transfer:
+	@bash scripts/transfer.sh \
+		$(if $(SERVER),$(SERVER)) \
+		$(if $(KEY),--key=$(KEY)) \
+		$(if $(PORT),--port=$(PORT)) \
+		$(if $(DIR),--dir=$(DIR)) \
+		$(ARGS)

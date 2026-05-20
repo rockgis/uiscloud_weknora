@@ -41,3 +41,7 @@ data/files/
 /scripts/scale_dev_jobs.sh
 # server  # 구 바이너리 이름 (현재 바이너리: uiscloud_weknora) — cmd/server/ 디렉토리 무시 방지를 위해 제거
 frontend/.vite
+
+### 배포 패키지 및 서버 설정 (민감 정보 포함)
+weknora-deploy-*.tar.gz
+deploy/.server-config

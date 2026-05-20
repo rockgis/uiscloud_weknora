@@ -1,0 +1,32 @@
+# WeKnora 서버 접속 설정
+# 이 파일을 .server-config 으로 복사하고 실제 값을 입력하세요
+# cp deploy/.server-config.example deploy/.server-config
+#
+# 주의: .server-config 파일은 .gitignore에 등록되어 있습니다.
+
+# ──────────────────────────────────────────────
+# 서버 접속 정보
+# ──────────────────────────────────────────────
+
+# 서버 IP 또는 도메인
+SERVER_HOST=192.168.1.100
+
+# SSH 포트 (기본: 22)
+SERVER_PORT=22
+
+# 서버 접속 사용자
+SERVER_USER=deploy
+
+# SSH 개인키 경로 (절대경로 또는 ~/ 사용 가능)
+# 기본값: ~/.ssh/id_rsa
+SERVER_SSH_KEY=~/.ssh/id_rsa
+
+# ──────────────────────────────────────────────
+# 배포 설정
+# ──────────────────────────────────────────────
+
+# 서버에서 WeKnora를 설치할 경로
+SERVER_DEPLOY_DIR=/opt/weknora
+
+# 패키지 타입: online(기본) 또는 offline(이미지 포함)
+PACKAGE_TYPE=online
